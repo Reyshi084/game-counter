@@ -13,6 +13,7 @@ const TOTAL_DIGIT = 5;
 const DEFAULT_DROP = "1";
 
 let isEncountFirst = false;
+let isEditNow = false;
 
 // -->
 
@@ -24,7 +25,7 @@ const makeSpace = (digit, max) => {
         text += SPACE_STRING;
     }
     return text;
-}
+};
 
 const resetStuck = () => {
     const stuckText = document.getElementById("stuck");
@@ -81,7 +82,7 @@ const countLuck = () => {
     const digit = luckStr.length;
     const innerText = makeSpace(digit, LUCK_DIGIT) + luckStr;
     luckText.innerHTML = innerText;
-}
+};
 
 const countEncount = () => {
     const encountText = document.getElementById("encount");
@@ -204,11 +205,37 @@ const checkMax = () => {
     }
 };
 
+const setInput = (id) => {
+    const textElem = document.getElementById(id);
+    const content = Number(textElem.textContent);
+    textElem.innerHTML = "";
+    const inputElem = document.createElement("input");
+    inputElem.value = content;
+    inputElem.size = 3;
+    inputElem.id = id + "-input";
+    textElem.appendChild(inputElem);
+};
+
+const removeInput = (id, maxDigit) => {
+    const inputElem = document.getElementById(id + "-input");
+    const textElem = document.getElementById(id);
+    let content = Number(inputElem.value);
+    if(isNaN(content) || content < 0) {
+        content = 0;
+    }
+    const digit = content.toString().length;
+    textElem.innerHTML = makeSpace(digit, maxDigit) + content;
+
+}
+
 // -->
 
 // <!-- event listener
 
 const onClickLapButton = () => {
+    if(isEditNow) {
+        return;
+    }
     countStuck();
     countTotal();
     checkMax();
@@ -219,6 +246,9 @@ const onClickLapButton = () => {
 };
 
 const onClickEncountButton = () => {
+    if(isEditNow) {
+        return;
+    }
     countEncount();
     checkMin();
     calcRate();
@@ -227,11 +257,48 @@ const onClickEncountButton = () => {
 };
 
 const onClickEditButton = () => {
+    // ボタン名変更
+    const editButton = document.getElementById("btn-edit");
+    if(isEditNow) {
+        editButton.innerHTML = "編集";
+        editButton.style.color = "black";
+        // inputをもどす
+        removeInput("stuck", STUCK_DIGIT);
+        removeInput("luck", LUCK_DIGIT);
+        removeInput("encount", ENCOUNT_DIGIT);
+        removeInput("min", MIN_DIGIT);
+        removeInput("max", MAX_DIGIT);
+        removeInput("total", TOTAL_DIGIT);
+        isEditNow = false;
+
+        isEncountFirst = true;
+        calcRate();
+    } else {
+        editButton.innerHTML = "完了";
+        editButton.style.color = "red";
+        // inputをつける
+        setInput("stuck");
+        setInput("luck");
+        setInput("encount");
+        setInput("min");
+        setInput("max");
+        setInput("total");
+        isEditNow = true;
+    }
     
+
+
 };
 
 const onClickResetButton = () => {
-    
+    if(isEditNow) {
+        return;
+    }
+    const isConfirm = window.confirm("すべてのデータをリセットします。よろしいですか？");
+    if(isConfirm) {
+        // リセット
+        console.log("reset!");
+    }
 };
 
 // -->
@@ -243,6 +310,12 @@ const onClickResetButton = () => {
 
     const encountButton = document.getElementById("btn-encount");
     encountButton.addEventListener("click", onClickEncountButton);
+
+    const editButton = document.getElementById("btn-edit");
+    editButton.addEventListener("click", onClickEditButton);
+
+    const resetButton = document.getElementById("btn-reset");
+    resetButton.addEventListener("click", onClickResetButton);
 })();
 
 
