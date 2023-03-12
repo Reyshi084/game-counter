@@ -1,0 +1,29 @@
+#info-table {
+    background-color: #f0f8ff;
+    font-size: x-large;
+}
+
+.btn-main {
+    width: 4em;
+    height: 3em;
+    font-size: xx-large;
+}
+
+.btn-sub {
+    width: 5.34em;
+    height: 1.5em;
+    font-size: x-large;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.info-text {
+    font-size: small;
+}
+
+td {
+    white-space: nowrap;
+}
