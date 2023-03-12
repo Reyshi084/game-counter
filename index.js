@@ -10,6 +10,8 @@ const RATE_DIGIT = 5;
 const MIN_DIGIT = 3;
 const MAX_DIGIT = 4;
 const TOTAL_DIGIT = 5;
+const DEFAULT_DROP = "1";
+
 let isEncountFirst = false;
 
 // -->
@@ -60,7 +62,25 @@ const countStuck = () => {
 };
 
 const countLuck = () => {
-    
+    const drop = prompt("ドロップ数を入力", DEFAULT_DROP);
+    const dropNum = Number(drop);
+    const luckText = document.getElementById("luck");
+    const luckNum = Number(luckText.textContent);
+
+    // エラー処理
+    if(isNaN(drop)) {
+        return;
+    }
+    if(isNaN(luckNum)) {
+        luckText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
+        return;
+    }
+
+    // 値の更新
+    const luckStr = Math.min(999, luckNum + dropNum).toString();
+    const digit = luckStr.length;
+    const innerText = makeSpace(digit, LUCK_DIGIT) + luckStr;
+    luckText.innerHTML = innerText;
 }
 
 const countEncount = () => {
@@ -203,6 +223,7 @@ const onClickEncountButton = () => {
     checkMin();
     calcRate();
     resetStuck();
+    countLuck();
 };
 
 const onClickEditButton = () => {
