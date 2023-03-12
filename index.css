@@ -3,6 +3,10 @@
     font-size: x-large;
 }
 
+#attention {
+    color: red;
+}
+
 .btn-main {
     width: 4em;
     height: 3em;
