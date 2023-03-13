@@ -1,9 +1,72 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-  </head>
-  <body>
-    this is local test.
-  </body>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link href="index.css" rel="stylesheet">
+  <script src="index.js" defer></script>
+  <title>モンスト EX周回カウンター</title>
+</head>
+<body>
+  <h1>モンスト EX周回カウンター</h1>
+  <div id="info">
+    <table cellspacing="12" id="info-table">
+      <tr class="center">
+        <td>
+          <span class="info-text">ハマり</span>
+          <span id="stuck">&ensp;&ensp;0</span>
+        </td>
+        <td>
+          <span class="info-text">ラック</span>
+          <span id="luck">&ensp;&ensp;0</span>
+        </td>
+      </tr>
+      <tr class="center">
+        <td>
+          <span class="info-text">遭遇数</span>
+          <span id="encount">&ensp;&ensp;0</span>
+        </td>
+        <td>
+          <span class="info-text">遭遇率</span>
+          <span id="rate">&ensp;0.00</span>%
+        </td>
+      </tr>
+      <tr class="center">
+        <td colspan="2">
+          <span class="info-text">最小/最大</span>
+          <span id="min">&ensp;&ensp;0</span>/<span id="max">&ensp;&ensp;&ensp;0</span>
+        </td>
+      </tr>
+      <tr class="center">
+        <td colspan="2">
+          <span class="info-text">総周回数</span>
+          <span id="total">&ensp;&ensp;&ensp;&ensp;0</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div id="btn">
+    <table>
+      <tr>
+        <td><button class="btn-main" id="btn-lap">周回</button></td>
+        <td><button class="btn-main" id="btn-encount">遭遇</button></td>
+      </tr>
+    </table>
+    <table id="tbl-sub">
+      <tr>
+        <td><button class="btn-sub" id="btn-edit">編集</button></td>
+        <td><button  class="btn-sub" id="btn-reset">リセット</button></td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div id="attention">
+    <div>＊データは自動で保存されます。ブラウザを閉じても問題ありません。</div>
+    <div>＊編集・ラック追加の際は半角数字で入力してください。</div>
+    <div>＊不具合の報告・要望などは下記TwitterのDMや返信にてお願いします。</div>
+  </div>
+  <div id="twitter">
+    <a href="https://twitter.com/reygame014">https://twitter.com/reygame014</a>
+  </div>
+</body>
 </html>
