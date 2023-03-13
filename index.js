@@ -27,13 +27,44 @@ const makeSpace = (digit, max) => {
     return text;
 };
 
-const resetStuck = () => {
-    const stuckText = document.getElementById("stuck");
+
+const resetInfo = (id, digit) => {
+    const text = document.getElementById(id);
     let innerText = "";
-    innerText += makeSpace(1, STUCK_DIGIT);
+    innerText += makeSpace(1, digit);
     innerText += "0";
-    stuckText.innerHTML = innerText;
+    text.innerHTML = innerText;
 };
+
+const resetStuck = () => {
+    resetInfo("stuck", STUCK_DIGIT);
+};
+
+const resetLuck = () => {
+    resetInfo("luck", LUCK_DIGIT);
+};
+
+const resetEncount = () => {
+    resetInfo("encount", ENCOUNT_DIGIT);
+};
+
+const resetRate = () => {
+    const rateText = document.getElementById("rate");
+    rateText.innerHTML = SPACE_STRING + "0.00";
+};
+
+const resetMin = () => {
+    resetInfo("min", MIN_DIGIT);
+};
+
+const resetMax = () => {
+    resetInfo("max", MAX_DIGIT);
+};
+
+const resetTotal = () => {
+    resetInfo("total", TOTAL_DIGIT);
+};
+
 
 const countStuck = () => {
     const stuckText = document.getElementById("stuck");
@@ -41,7 +72,7 @@ const countStuck = () => {
     
     // エラー処理
     if(isNaN(stuckNum)) {
-        stuckText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
+        resetStuck();
         return;
     }
 
@@ -73,7 +104,7 @@ const countLuck = () => {
         return;
     }
     if(isNaN(luckNum)) {
-        luckText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
+        resetLuck();
         return;
     }
 
@@ -90,7 +121,7 @@ const countEncount = () => {
     
     // エラー処理
     if(isNaN(encountNum)) {
-        encountText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
+        resetEncount();
         return;
     }
 
@@ -117,7 +148,7 @@ const countTotal = () => {
     
     // エラー処理
     if(isNaN(totalNum)) {
-        totalText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
+        resetTotal();
         return;
     }
 
@@ -147,9 +178,9 @@ const calcRate = () => {
     
     // エラー処理
     if(isNaN(totalNum) || isNaN(encountNum) || totalNum <= 0) {
-        totalText.innerHTML = SPACE_STRING + SPACE_STRING + SPACE_STRING + SPACE_STRING + "0";
-        encountText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
-        rateText.innerHTML = SPACE_STRING + "0.00";
+        resetTotal();
+        resetEncount();
+        resetRate();
         isEncountFirst = false;
         return;
     }
@@ -171,8 +202,8 @@ const checkMin = () => {
 
     // エラー処理
     if(isNaN(minNum) || isNaN(stuckNum)) {
-        minText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
-        stuckText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
+        resetMin();
+        resetStuck();
         return;
     }
 
@@ -192,8 +223,8 @@ const checkMax = () => {
 
     // エラー処理
     if(isNaN(maxNum) || isNaN(stuckNum)) {
-        maxText.innerHTML = SPACE_STRING + SPACE_STRING + SPACE_STRING + "0";
-        stuckText.innerHTML = SPACE_STRING + SPACE_STRING + "0";
+        resetMax();
+        resetStuck();
         return;
     }
 
@@ -225,7 +256,6 @@ const removeInput = (id, maxDigit) => {
     }
     const digit = content.toString().length;
     textElem.innerHTML = makeSpace(digit, maxDigit) + content;
-
 }
 
 // -->
@@ -296,8 +326,13 @@ const onClickResetButton = () => {
     }
     const isConfirm = window.confirm("すべてのデータをリセットします。よろしいですか？");
     if(isConfirm) {
-        // リセット
-        console.log("reset!");
+        resetStuck();
+        resetLuck();
+        resetEncount();
+        resetRate();
+        resetMin();
+        resetMax();
+        resetTotal();
     }
 };
 
