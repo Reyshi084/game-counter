@@ -12,8 +12,9 @@ const MAX_DIGIT = 4;
 const TOTAL_DIGIT = 5;
 const DEFAULT_DROP = "1";
 
-let isEncountFirst = false;
+let isEncounted = false;
 let isEditNow = false;
+let nowData = 1;
 
 // -->
 
@@ -139,7 +140,7 @@ const countEncount = () => {
     innerText += innerNum.toString(); 
     // 文字列の置換
     encountText.innerHTML = innerText;
-    isEncountFirst = true;
+    isEncounted = true;
 };
 
 const countTotal = () => {
@@ -181,7 +182,7 @@ const calcRate = () => {
         resetTotal();
         resetEncount();
         resetRate();
-        isEncountFirst = false;
+        isEncounted = false;
         return;
     }
 
@@ -208,7 +209,7 @@ const checkMin = () => {
     }
 
     // 値の比較・更新
-    if(!isEncountFirst || minNum > stuckNum) { 
+    if(!isEncounted || minNum > stuckNum) { 
         const digit = stuckNum.toString().length;
         const innerText = makeSpace(digit, MIN_DIGIT) + stuckNum;
         minText.innerHTML = innerText;
@@ -256,7 +257,37 @@ const removeInput = (id, maxDigit) => {
     }
     const digit = content.toString().length;
     textElem.innerHTML = makeSpace(digit, maxDigit) + content;
-}
+};
+
+const saveInfo = (id, dataNum) => {
+    localStorage.setItem(id + dataNum, Number(document.getElementById(id).innerHTML));
+};
+
+const saveAllInfo = (dataNum) => {
+    saveInfo("stuck", dataNum);
+    saveInfo("luck", dataNum);
+    saveInfo("encount", dataNum);
+    saveInfo("min", dataNum);
+    saveInfo("max", dataNum);
+    saveInfo("total", dataNum);
+    localStorage.setItem("isEncounted" + dataNum, isEncounted);
+};
+
+const loadInfo = (id, dataNum, digitRange) => {
+    const data = Number(localStorage.getItem(id + dataNum));
+    const digit = data.toString().length;
+    document.getElementById(id).innerHTML = makeSpace(digit, digitRange) + data.toString();
+};
+
+const loadAllInfo = (dataNum) => {
+    loadInfo("stuck", dataNum, STUCK_DIGIT);
+    loadInfo("luck", dataNum, LUCK_DIGIT);
+    loadInfo("encount", dataNum, ENCOUNT_DIGIT);
+    loadInfo("min", dataNum, MIN_DIGIT);
+    loadInfo("max", dataNum, MAX_DIGIT);
+    loadInfo("total", dataNum, TOTAL_DIGIT);
+    isEncounted = Number(localStorage.getItem("isEncounted" + dataNum));
+};
 
 // -->
 
@@ -269,10 +300,11 @@ const onClickLapButton = () => {
     countStuck();
     countTotal();
     checkMax();
-    if(!isEncountFirst) {
+    if(!isEncounted) {
         checkMin();
     }
     calcRate();
+    saveAllInfo(nowData);
 };
 
 const onClickEncountButton = () => {
@@ -284,6 +316,7 @@ const onClickEncountButton = () => {
     calcRate();
     resetStuck();
     countLuck();
+    saveAllInfo(nowData);
 };
 
 const onClickEditButton = () => {
@@ -301,8 +334,9 @@ const onClickEditButton = () => {
         removeInput("total", TOTAL_DIGIT);
         isEditNow = false;
 
-        isEncountFirst = true;
+        isEncounted = true;
         calcRate();
+        saveAllInfo(nowData);
     } else {
         editButton.innerHTML = "完了";
         editButton.style.color = "red";
@@ -315,9 +349,6 @@ const onClickEditButton = () => {
         setInput("total");
         isEditNow = true;
     }
-    
-
-
 };
 
 const onClickResetButton = () => {
@@ -333,6 +364,8 @@ const onClickResetButton = () => {
         resetMin();
         resetMax();
         resetTotal();
+        isEncounted = false;
+        localStorage.clear();
     }
 };
 
@@ -351,6 +384,8 @@ const onClickResetButton = () => {
 
     const resetButton = document.getElementById("btn-reset");
     resetButton.addEventListener("click", onClickResetButton);
+
+    loadAllInfo(1);
 })();
 
 
