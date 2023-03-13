@@ -7,6 +7,12 @@
     color: red;
 }
 
+#guide {
+    font-size: larger;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .btn-main {
     width: 4em;
     height: 3em;
