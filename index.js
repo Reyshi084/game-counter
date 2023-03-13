@@ -12,7 +12,7 @@ const MAX_DIGIT = 4;
 const TOTAL_DIGIT = 5;
 const DEFAULT_DROP = "1";
 
-let isEncounted = false;
+let isEncount = false;
 let isEditNow = false;
 let nowData = 1;
 
@@ -28,6 +28,21 @@ const makeSpace = (digit, max) => {
     return text;
 };
 
+// １度でも遭遇したことがあるかどうか
+const checkEncount = () => {
+    return Boolean(Number(document.getElementById("encount").textContent));
+};
+
+// 総周回数の矛盾処理
+const checkTotal = () => {
+    const totalText = document.getElementById("total");
+    const totalNum = Number(totalText.textContent);
+    const stuckNum = Number(document.getElementById("stuck").textContent);
+    if(totalNum < stuckNum) {
+        const digit = stuckNum.toString().length;
+        totalText.innerHTML = makeSpace(digit, TOTAL_DIGIT) + stuckNum.toString();
+    }
+};
 
 const resetInfo = (id, digit) => {
     const text = document.getElementById(id);
@@ -140,7 +155,7 @@ const countEncount = () => {
     innerText += innerNum.toString(); 
     // 文字列の置換
     encountText.innerHTML = innerText;
-    isEncounted = true;
+    isEncount = true;
 };
 
 const countTotal = () => {
@@ -182,7 +197,7 @@ const calcRate = () => {
         resetTotal();
         resetEncount();
         resetRate();
-        isEncounted = false;
+        isEncount = false;
         return;
     }
 
@@ -209,7 +224,7 @@ const checkMin = () => {
     }
 
     // 値の比較・更新
-    if(!isEncounted || minNum > stuckNum) { 
+    if(!isEncount || minNum > stuckNum) { 
         const digit = stuckNum.toString().length;
         const innerText = makeSpace(digit, MIN_DIGIT) + stuckNum;
         minText.innerHTML = innerText;
@@ -270,7 +285,6 @@ const saveAllInfo = (dataNum) => {
     saveInfo("min", dataNum);
     saveInfo("max", dataNum);
     saveInfo("total", dataNum);
-    localStorage.setItem("isEncounted" + dataNum, isEncounted);
 };
 
 const loadInfo = (id, dataNum, digitRange) => {
@@ -286,7 +300,8 @@ const loadAllInfo = (dataNum) => {
     loadInfo("min", dataNum, MIN_DIGIT);
     loadInfo("max", dataNum, MAX_DIGIT);
     loadInfo("total", dataNum, TOTAL_DIGIT);
-    isEncounted = Number(localStorage.getItem("isEncounted" + dataNum));
+    isEncount = checkEncount();
+    checkTotal();
 };
 
 // -->
@@ -300,7 +315,7 @@ const onClickLapButton = () => {
     countStuck();
     countTotal();
     checkMax();
-    if(!isEncounted) {
+    if(!isEncount) {
         checkMin();
     }
     calcRate();
@@ -322,9 +337,17 @@ const onClickEncountButton = () => {
 const onClickEditButton = () => {
     // ボタン名変更
     const editButton = document.getElementById("btn-edit");
+    const lapButton = document.getElementById("btn-lap");
+    const encountButton = document.getElementById("btn-encount");
+    const resetButton = document.getElementById("btn-reset");
+
     if(isEditNow) {
         editButton.innerHTML = "編集";
         editButton.style.color = "black";
+        lapButton.style.color = "black";
+        encountButton.style.color = "black";
+        resetButton.style.color = "black";
+
         // inputをもどす
         removeInput("stuck", STUCK_DIGIT);
         removeInput("luck", LUCK_DIGIT);
@@ -334,12 +357,20 @@ const onClickEditButton = () => {
         removeInput("total", TOTAL_DIGIT);
         isEditNow = false;
 
-        isEncounted = true;
+        // 更新後の処理
+        isEncount = checkEncount();
+        checkTotal();
+        checkMin();
+        checkMax();
         calcRate();
         saveAllInfo(nowData);
     } else {
         editButton.innerHTML = "完了";
         editButton.style.color = "red";
+        lapButton.style.color = "gray";
+        encountButton.style.color = "gray";
+        resetButton.style.color = "gray";
+
         // inputをつける
         setInput("stuck");
         setInput("luck");
@@ -364,7 +395,7 @@ const onClickResetButton = () => {
         resetMin();
         resetMax();
         resetTotal();
-        isEncounted = false;
+        isEncount = false;
         localStorage.clear();
     }
 };
