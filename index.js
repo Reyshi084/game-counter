@@ -270,7 +270,6 @@ const saveAllInfo = (dataNum) => {
     saveInfo("min", dataNum);
     saveInfo("max", dataNum);
     saveInfo("total", dataNum);
-    localStorage.setItem("isEncounted" + dataNum, isEncounted);
 };
 
 const loadInfo = (id, dataNum, digitRange) => {
@@ -286,7 +285,7 @@ const loadAllInfo = (dataNum) => {
     loadInfo("min", dataNum, MIN_DIGIT);
     loadInfo("max", dataNum, MAX_DIGIT);
     loadInfo("total", dataNum, TOTAL_DIGIT);
-    isEncounted = Number(localStorage.getItem("isEncounted" + dataNum));
+    isEncounted = Boolean(Number(document.getElementById("encount").textContent));
 };
 
 // -->
