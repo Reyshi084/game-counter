@@ -1,3 +1,29 @@
+/* 
+* このファイルは、Reggae One-Regularフォントのサブセットを使用しています。
+* 
+* Reggae One-Regularフォントは、SILオープンフォントライセンス Version 1.1 に基づいてライセンスされています。
+* オリジナルファイルは以下のURLから入手することが出来ます。
+* 
+*   https://github.com/fontworks-fonts/Reggae
+*/
+
+@font-face {
+    font-family: "Reggae";
+    src: url("font/subset-ReggaeOne-Regular.ttf") format("truetype");
+}
+
+#info, button, h1 {
+    font-family: 'Reggae', sans-serif;
+}
+
+button {
+    text-align: center;
+}
+
+footer {
+    color: gray;
+}
+
 #info-table {
     background-color: #f0f8ff;
     font-size: x-large;
@@ -5,6 +31,11 @@
 
 #attention {
     color: red;
+}
+
+#attention-list {
+    list-style: "*";
+    padding-left: 10px;
 }
 
 #guide {
@@ -21,7 +52,7 @@
 
 .btn-sub {
     width: 5.34em;
-    height: 1.5em;
+    height: 2.0em;
     font-size: x-large;
 }
 
