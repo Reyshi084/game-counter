@@ -8,63 +8,65 @@
 */
 
 @font-face {
-    font-family: "Reggae";
-    src: url("font/subset-ReggaeOne-Regular.ttf") format("truetype");
+  font-family: "Reggae";
+  src: url("font/subset-ReggaeOne-Regular.ttf") format("truetype");
 }
 
-#info, button, h1 {
-    font-family: 'Reggae', sans-serif;
+#info,
+button,
+h1 {
+  font-family: "Reggae", sans-serif;
 }
 
 button {
-    text-align: center;
+  text-align: center;
 }
 
 footer {
-    color: gray;
+  color: gray;
 }
 
 #info-table {
-    background-color: #f0f8ff;
-    font-size: x-large;
+  background-color: #f0f8ff;
+  font-size: x-large;
 }
 
 #attention {
-    color: red;
+  color: red;
 }
 
 #attention-list {
-    list-style: "*";
-    padding-left: 10px;
+  list-style: "*";
+  padding-left: 10px;
 }
 
 #guide {
-    font-size: larger;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  font-size: larger;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .btn-main {
-    width: 4em;
-    height: 3em;
-    font-size: xx-large;
+  width: 4em;
+  height: 3em;
+  font-size: xx-large;
 }
 
 .btn-sub {
-    width: 5.34em;
-    height: 2.0em;
-    font-size: x-large;
+  width: 5.34em;
+  height: 2em;
+  font-size: x-large;
 }
 
 .center {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .info-text {
-    font-size: small;
+  font-size: small;
 }
 
 td {
-    white-space: nowrap;
+  white-space: nowrap;
 }
