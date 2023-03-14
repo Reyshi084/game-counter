@@ -1,3 +1,7 @@
+button {
+    text-align: center;
+}
+
 #info-table {
     background-color: #f0f8ff;
     font-size: x-large;
@@ -5,6 +9,11 @@
 
 #attention {
     color: red;
+}
+
+#attention-list {
+    list-style: "*";
+    padding-left: 10px;
 }
 
 #guide {
