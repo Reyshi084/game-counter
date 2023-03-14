@@ -1,5 +1,8 @@
 # モンスト EX周回カウンター
+## URL
+https://reyshi084.github.io/game-counter/
 
+---
 ## 更新情報
 - **2023/03/15**  
     一部フォントを変更しました。  
@@ -38,5 +41,5 @@
     確認画面でOKを押すと、全てのデータがリセットされます。
 ---
 ## Twitterリンク
-[https://twitter.com/reygame014](https://twitter.com/reygame014)  
-＊質問や不具合報告、要望などがあればこちらへどうぞ。
+https://twitter.com/reygame014  
+質問や不具合報告、要望などがあればこちらへどうぞ。
