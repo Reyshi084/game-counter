@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint index.js",
+    "format": "prettier -w index.*"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,10 @@
   "homepage": "https://github.com/Reyshi084/game-counter#readme",
   "devDependencies": {
     "eslint": "^8.36.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
     "prettier": "^2.8.4"
   }
 }
