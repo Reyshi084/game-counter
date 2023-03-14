@@ -417,6 +417,7 @@ const onClickResetButton = () => {
     resetButton.addEventListener("click", onClickResetButton);
 
     loadAllInfo(1);
+    calcRate();
 })();
 
 
