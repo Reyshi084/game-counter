@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Reyshi084/game-counter/issues"
   },
-  "homepage": "https://github.com/Reyshi084/game-counter#readme"
+  "homepage": "https://github.com/Reyshi084/game-counter#readme",
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "prettier": "^2.8.4"
+  }
 }
