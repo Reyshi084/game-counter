@@ -11,6 +11,7 @@ const MIN_DIGIT = 3;
 const MAX_DIGIT = 4;
 const TOTAL_DIGIT = 5;
 const DEFAULT_DROP = "1";
+const MAX_SAVEDATA_NUM = 5;
 
 let isEncount = false;
 let isEditNow = false;
@@ -392,7 +393,7 @@ const onClickResetButton = () => {
     return;
   }
   const isConfirm = window.confirm(
-    "すべてのデータをリセットします。よろしいですか？"
+    "データ" + nowData + "をリセットします。よろしいですか？"
   );
   if (isConfirm) {
     resetStuck();
@@ -403,7 +404,7 @@ const onClickResetButton = () => {
     resetMax();
     resetTotal();
     isEncount = false;
-    localStorage.clear();
+    saveAllInfo(nowData);
   }
 };
 
@@ -422,6 +423,16 @@ const onClickResetButton = () => {
 
   const resetButton = document.getElementById("btn-reset");
   resetButton.addEventListener("click", onClickResetButton);
+
+  // セーブデータの切り替え
+  for (let i = 1; i <= MAX_SAVEDATA_NUM; i++) {
+    const savedataButton = document.getElementById("btn-save-" + i);
+    savedataButton.addEventListener("click", () => {
+      saveAllInfo(nowData);
+      nowData = i;
+      loadAllInfo(nowData);
+    });
+  }
 
   loadAllInfo(1);
   calcRate();
