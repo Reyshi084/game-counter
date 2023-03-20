@@ -482,11 +482,15 @@ const onClickResetButton = () => {
         onClickEditButton();
       }
       nowData = i;
+      document.getElementById("now-data").innerHTML = nowData;
       loadAllInfo(nowData);
       calcRate();
+      localStorage.setItem("last-data", nowData);
     });
   }
-
-  loadAllInfo(1);
+  let lastData = localStorage.getItem("last-data");
+  nowData = lastData ? lastData : 1;
+  document.getElementById("now-data").innerHTML = nowData;
+  loadAllInfo(nowData);
   calcRate();
 })();
