@@ -114,8 +114,7 @@ const countStuck = () => {
   stuckText.innerHTML = innerText;
 };
 
-const countLuck = () => {
-  const drop = prompt("ドロップ数を入力", DEFAULT_DROP);
+const countLuck = (drop) => {
   const dropNum = Number(drop);
   const luckText = document.getElementById("luck");
   const luckNum = Number(luckText.textContent);
@@ -375,11 +374,16 @@ const onClickEncountButton = () => {
   if (isEditNow) {
     return;
   }
+  const drop = prompt("ドロップ数を入力", DEFAULT_DROP);
+  // キャンセルボタンが押されたとき
+  if (drop === null) {
+    return;
+  }
   countEncount();
   checkMin();
   calcRate();
   resetStuck();
-  countLuck();
+  countLuck(drop);
   saveAllInfo(nowData);
 };
 
