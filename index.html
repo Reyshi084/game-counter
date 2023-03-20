@@ -16,8 +16,21 @@
     <title>モンスト EXカウンター</title>
   </head>
   <body>
+    <div id="save">
+      <ul id="save-container">
+        <li class="save-list"><span id="save-text">DATA</span></li>
+        <li class="save-list"><button id="btn-save-1">1</button></li>
+        <li class="save-list"><button id="btn-save-2">2</button></li>
+        <li class="save-list"><button id="btn-save-3">3</button></li>
+        <li class="save-list"><button id="btn-save-4">4</button></li>
+        <li class="save-list"><button id="btn-save-5">5</button></li>
+      </ul>
+    </div>
     <h1>モンスト EXカウンター</h1>
     <div id="info">
+      <div>
+        DATA <span id="now-data">1</span> : <span id="data-title"></span>
+      </div>
       <table cellspacing="12" id="info-table">
         <tr class="center">
           <td>
@@ -77,7 +90,9 @@
     </div>
     <div id="attention">
       <ul id="attention-list">
-        <li>データは自動で保存されます。ブラウザを閉じても問題ありません。</li>
+        <li>
+          データは自動で保存されますが、使用前に更新ボタンを押すなどで保存されるかどうかをご確認ください。
+        </li>
         <li>編集・ラック追加の際は半角数字で入力してください。</li>
         <li>不具合の報告・要望などは下記TwitterのDMや返信にてお願いします。</li>
       </ul>

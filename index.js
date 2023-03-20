@@ -11,6 +11,7 @@ const MIN_DIGIT = 3;
 const MAX_DIGIT = 4;
 const TOTAL_DIGIT = 5;
 const DEFAULT_DROP = "1";
+const MAX_SAVEDATA_NUM = 5;
 
 let isEncount = false;
 let isEditNow = false;
@@ -50,6 +51,11 @@ const resetInfo = (id, digit) => {
   innerText += makeSpace(1, digit);
   innerText += "0";
   text.innerHTML = innerText;
+};
+
+const resetTitle = () => {
+  const title = document.getElementById("data-title");
+  title.innerHTML = "EX" + nowData;
 };
 
 const resetStuck = () => {
@@ -108,8 +114,7 @@ const countStuck = () => {
   stuckText.innerHTML = innerText;
 };
 
-const countLuck = () => {
-  const drop = prompt("ドロップ数を入力", DEFAULT_DROP);
+const countLuck = (drop) => {
   const dropNum = Number(drop);
   const luckText = document.getElementById("luck");
   const luckNum = Number(luckText.textContent);
@@ -253,6 +258,17 @@ const checkMax = () => {
   }
 };
 
+const setInputTitle = () => {
+  const titleElem = document.getElementById("data-title");
+  const content = titleElem.textContent;
+  titleElem.innerHTML = "";
+  const inputElem = document.createElement("input");
+  inputElem.value = content;
+  inputElem.size = 10;
+  inputElem.id = "title-input";
+  titleElem.appendChild(inputElem);
+};
+
 const setInput = (id) => {
   const textElem = document.getElementById(id);
   const content = Number(textElem.textContent);
@@ -262,6 +278,16 @@ const setInput = (id) => {
   inputElem.size = 3;
   inputElem.id = id + "-input";
   textElem.appendChild(inputElem);
+};
+
+const removeInputTitle = () => {
+  const inputElem = document.getElementById("title-input");
+  const titleElem = document.getElementById("data-title");
+  let content = inputElem.value;
+  if (content === "") {
+    content = "EX" + nowData;
+  }
+  titleElem.innerHTML = content;
 };
 
 const removeInput = (id, maxDigit) => {
@@ -282,7 +308,15 @@ const saveInfo = (id, dataNum) => {
   );
 };
 
+const saveTitle = () => {
+  localStorage.setItem(
+    "title" + nowData,
+    document.getElementById("data-title").innerHTML
+  );
+};
+
 const saveAllInfo = (dataNum) => {
+  saveTitle();
   saveInfo("stuck", dataNum);
   saveInfo("luck", dataNum);
   saveInfo("encount", dataNum);
@@ -298,7 +332,16 @@ const loadInfo = (id, dataNum, digitRange) => {
     makeSpace(digit, digitRange) + data.toString();
 };
 
+const loadTitle = () => {
+  let data = localStorage.getItem("title" + nowData);
+  if (!data) {
+    data = "EX" + nowData;
+  }
+  document.getElementById("data-title").innerHTML = data;
+};
+
 const loadAllInfo = (dataNum) => {
+  loadTitle();
   loadInfo("stuck", dataNum, STUCK_DIGIT);
   loadInfo("luck", dataNum, LUCK_DIGIT);
   loadInfo("encount", dataNum, ENCOUNT_DIGIT);
@@ -331,11 +374,16 @@ const onClickEncountButton = () => {
   if (isEditNow) {
     return;
   }
+  const drop = prompt("ドロップ数を入力", DEFAULT_DROP);
+  // キャンセルボタンが押されたとき
+  if (drop === null) {
+    return;
+  }
   countEncount();
   checkMin();
   calcRate();
   resetStuck();
-  countLuck();
+  countLuck(drop);
   saveAllInfo(nowData);
 };
 
@@ -354,6 +402,7 @@ const onClickEditButton = () => {
     resetButton.style.color = "black";
 
     // inputをもどす
+    removeInputTitle();
     removeInput("stuck", STUCK_DIGIT);
     removeInput("luck", LUCK_DIGIT);
     removeInput("encount", ENCOUNT_DIGIT);
@@ -377,6 +426,7 @@ const onClickEditButton = () => {
     resetButton.style.color = "gray";
 
     // inputをつける
+    setInputTitle();
     setInput("stuck");
     setInput("luck");
     setInput("encount");
@@ -392,9 +442,10 @@ const onClickResetButton = () => {
     return;
   }
   const isConfirm = window.confirm(
-    "すべてのデータをリセットします。よろしいですか？"
+    "データ" + nowData + "をリセットします。よろしいですか？"
   );
   if (isConfirm) {
+    resetTitle();
     resetStuck();
     resetLuck();
     resetEncount();
@@ -403,7 +454,7 @@ const onClickResetButton = () => {
     resetMax();
     resetTotal();
     isEncount = false;
-    localStorage.clear();
+    saveAllInfo(nowData);
   }
 };
 
@@ -423,6 +474,23 @@ const onClickResetButton = () => {
   const resetButton = document.getElementById("btn-reset");
   resetButton.addEventListener("click", onClickResetButton);
 
-  loadAllInfo(1);
+  // セーブデータの切り替え
+  for (let i = 1; i <= MAX_SAVEDATA_NUM; i++) {
+    const savedataButton = document.getElementById("btn-save-" + i);
+    savedataButton.addEventListener("click", () => {
+      if (isEditNow) {
+        onClickEditButton();
+      }
+      nowData = i;
+      document.getElementById("now-data").innerHTML = nowData;
+      loadAllInfo(nowData);
+      calcRate();
+      localStorage.setItem("last-data", nowData);
+    });
+  }
+  let lastData = localStorage.getItem("last-data");
+  nowData = lastData ? lastData : 1;
+  document.getElementById("now-data").innerHTML = nowData;
+  loadAllInfo(nowData);
   calcRate();
 })();
