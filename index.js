@@ -10,6 +10,8 @@ const RATE_DIGIT = 5;
 const MIN_DIGIT = 3;
 const MAX_DIGIT = 4;
 const TOTAL_DIGIT = 5;
+const EXLOSE_DIGIT = 5;
+
 const DEFAULT_DROP = "1";
 const MAX_SAVEDATA_NUM = 5;
 
@@ -85,6 +87,10 @@ const resetMax = () => {
 
 const resetTotal = () => {
   resetInfo("total", TOTAL_DIGIT);
+};
+
+const resetExLose = () => {
+  resetInfo("exlose", EXLOSE_DIGIT);
 };
 
 const countStuck = () => {
@@ -187,6 +193,33 @@ const countTotal = () => {
 
   // 文字列の置換
   totalText.innerHTML = innerText;
+};
+
+const countExLose = () => {
+  const exloseText = document.getElementById("exlose");
+  const exloseNum = Number(exloseText.textContent);
+
+  // エラー処理
+  if (isNaN(exloseNum)) {
+    resetExLose();
+    return;
+  }
+
+  let innerNum = exloseNum;
+  let innerText = "";
+
+  // 数値の変更
+  innerNum = Math.floor(innerNum);
+  innerNum = Math.max(innerNum, 0);
+  innerNum++;
+
+  // 空白を入れた文字列の作成
+  const digit = innerNum.toString().length;
+  innerText += makeSpace(digit, EXLOSE_DIGIT);
+  innerText += innerNum.toString();
+
+  // 文字列の置換
+  exloseText.innerHTML = innerText;
 };
 
 const calcRate = () => {
@@ -323,6 +356,7 @@ const saveAllInfo = (dataNum) => {
   saveInfo("min", dataNum);
   saveInfo("max", dataNum);
   saveInfo("total", dataNum);
+  saveInfo("exlose", dataNum);
 };
 
 const loadInfo = (id, dataNum, digitRange) => {
@@ -348,6 +382,7 @@ const loadAllInfo = (dataNum) => {
   loadInfo("min", dataNum, MIN_DIGIT);
   loadInfo("max", dataNum, MAX_DIGIT);
   loadInfo("total", dataNum, TOTAL_DIGIT);
+  loadInfo("exlose", dataNum, EXLOSE_DIGIT);
   isEncount = checkEncount();
   checkTotal();
 };
@@ -374,7 +409,10 @@ const onClickEncountButton = () => {
   if (isEditNow) {
     return;
   }
-  const drop = prompt("ドロップ数を入力", DEFAULT_DROP);
+  const drop = prompt(
+    "ドロップ数を入力（負けてしまった場合は0を入力してください）",
+    DEFAULT_DROP
+  );
   // キャンセルボタンが押されたとき
   if (drop === null) {
     return;
@@ -384,6 +422,9 @@ const onClickEncountButton = () => {
   calcRate();
   resetStuck();
   countLuck(drop);
+  if (drop === "0") {
+    countExLose();
+  }
   saveAllInfo(nowData);
 };
 
@@ -409,6 +450,7 @@ const onClickEditButton = () => {
     removeInput("min", MIN_DIGIT);
     removeInput("max", MAX_DIGIT);
     removeInput("total", TOTAL_DIGIT);
+    removeInput("exlose", EXLOSE_DIGIT);
     isEditNow = false;
 
     // 更新後の処理
@@ -433,6 +475,7 @@ const onClickEditButton = () => {
     setInput("min");
     setInput("max");
     setInput("total");
+    setInput("exlose");
     isEditNow = true;
   }
 };
@@ -453,6 +496,7 @@ const onClickResetButton = () => {
     resetMin();
     resetMax();
     resetTotal();
+    resetExLose();
     isEncount = false;
     saveAllInfo(nowData);
   }
