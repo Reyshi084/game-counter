@@ -156,9 +156,12 @@ footer {
   font-size: small;
 }
 
-.td-info {
-  padding: 0px;
-  margin: 0px;
+.info-text-sub {
+  font-size: xx-small;
+}
+
+.info-num-sub {
+  font-size: large;
 }
 
 td {
