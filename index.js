@@ -272,6 +272,24 @@ const countTreasureNum = () => {
   treasureNumText.innerHTML = innerText;
 };
 
+const changeTreasureNum = (treasureNum) => {
+  const treasureNumText = document.getElementById("treasure-num");
+
+  let innerNum = treasureNum;
+  let innerText = "";
+
+  innerNum = Math.floor(innerNum);
+  innerNum = Math.max(innerNum, 0);
+
+  // 空白を入れた文字列の作成
+  const digit = innerNum.toString().length;
+  innerText += makeSpace(digit, TREASURE_NUM_DIGIT);
+  innerText += innerNum.toString();
+
+  // 文字列の置換
+  treasureNumText.innerHTML = innerText;
+};
+
 const countLuckresNum = () => {
   const luckresNumText = document.getElementById("luckres-num");
   const luckresNum = Number(luckresNumText.textContent);
@@ -478,6 +496,16 @@ const hideKinkiInfo = () => {
   luckresTr.style.display = "none";
 };
 
+const displayTreasureCalcButton = () => {
+  const treasureBtn = document.getElementById("precise-calc");
+  treasureBtn.style.display = "";
+};
+
+const hideTreasureCalcButton = () => {
+  const treasureBtn = document.getElementById("precise-calc");
+  treasureBtn.style.display = "none";
+};
+
 const saveInfo = (id, dataNum) => {
   localStorage.setItem(
     id + dataNum,
@@ -630,6 +658,7 @@ const onClickEditButton = () => {
     removeInput("exlose", EXLOSE_DIGIT);
     removeInput("treasure-num", TREASURE_NUM_DIGIT);
     removeInput("luckres-num", LUCKRES_NUM_DIGIT);
+    hideTreasureCalcButton();
     isEditNow = false;
 
     // 更新後の処理
@@ -659,6 +688,9 @@ const onClickEditButton = () => {
     setInput("exlose");
     setInput("treasure-num");
     setInput("luckres-num");
+    if (isKinkiMode) {
+      displayTreasureCalcButton();
+    }
     isEditNow = true;
   }
 };
@@ -693,9 +725,69 @@ const onClickKinkiCheckBox = () => {
   isKinkiMode = !isKinkiMode;
   if (isKinkiMode) {
     displayKinkiInfo();
+    // 編集状態でモードが変更された場合（設定）
+    if (isEditNow) {
+      displayTreasureCalcButton();
+    }
   } else {
     hideKinkiInfo();
+    // 編集状態でモードが変更された場合（解除）
+    if (isEditNow) {
+      hideTreasureCalcButton();
+    }
   }
+  saveAllInfo(nowData);
+};
+
+const onClickTreasureCalcButton = () => {
+  const conf = confirm(
+    "至宝発動数以外の情報を入力した状態で[OK]を押して次に進んでください"
+  );
+  if (!conf) {
+    return;
+  }
+
+  // 必要な値をinputから取得
+  const luckresNum = Number(document.getElementById("luckres-num-input").value);
+  const luck = Number(document.getElementById("luck-input").value);
+  const encount = Number(document.getElementById("encount-input").value);
+  const exlose = Number(document.getElementById("exlose-input").value);
+
+  // ラキリザが0の場合は即決定
+  if (luckresNum === 0) {
+    onClickEditButton();
+    changeTreasureNum(luck - (encount - exlose));
+    calcTreasureRate();
+    return;
+  }
+
+  // ラキリザ合計ドロップ数
+  const retTotal = prompt(
+    "全" + luckresNum + "回のラキリザで合計何ドロップしたか入力"
+  );
+  if (retTotal === null) {
+    return;
+  }
+  const luckresTotalLuck = Number(retTotal);
+
+  // ラキリザ合計至宝発動数
+  const retTreasure = prompt(
+    "全" + luckresNum + "回のラキリザのうち何回至宝が発動したか入力"
+  );
+  if (retTreasure === null) {
+    return;
+  }
+  const luckresTotalTreasureNum = Number(retTreasure);
+
+  // 計算
+  onClickEditButton();
+  changeTreasureNum(
+    luck -
+      luckresTotalLuck -
+      (encount - luckresNum - exlose) +
+      luckresTotalTreasureNum
+  );
+  calcTreasureRate();
   saveAllInfo(nowData);
 };
 
@@ -718,6 +810,9 @@ const onClickKinkiCheckBox = () => {
   const kinkiCheckBox = document.getElementById("kinki-mode");
   kinkiCheckBox.addEventListener("change", onClickKinkiCheckBox);
 
+  const treasureCalcButton = document.getElementById("btn-treasure-calc");
+  treasureCalcButton.addEventListener("click", onClickTreasureCalcButton);
+
   // セーブデータの切り替え
   for (let i = 1; i <= MAX_SAVEDATA_NUM; i++) {
     const savedataButton = document.getElementById("btn-save-" + i);
@@ -734,6 +829,7 @@ const onClickKinkiCheckBox = () => {
       localStorage.setItem("last-data", nowData);
     });
   }
+  hideTreasureCalcButton();
   let lastData = localStorage.getItem("last-data");
   nowData = lastData ? lastData : 1;
   document.getElementById("now-data").innerHTML = nowData;
