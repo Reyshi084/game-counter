@@ -11,6 +11,10 @@ const MIN_DIGIT = 3;
 const MAX_DIGIT = 4;
 const TOTAL_DIGIT = 5;
 const EXLOSE_DIGIT = 5;
+const TREASURE_NUM_DIGIT = 3;
+const TREASURE_RATE_DIGIT = 5;
+const LUCKRES_NUM_DIGIT = 3;
+const LUCKRES_RATE_DIGIT = 5;
 
 const DEFAULT_DROP = "1";
 const MAX_SAVEDATA_NUM = 5;
@@ -94,8 +98,22 @@ const resetExLose = () => {
   resetInfo("exlose", EXLOSE_DIGIT);
 };
 
-const resetKinkiMode = () => {
-  isKinkiMode = false;
+const resetTreasureNum = () => {
+  resetInfo("treasure-num", TREASURE_NUM_DIGIT);
+};
+
+const resetTreasureRate = () => {
+  const rateText = document.getElementById("treasure-rate");
+  rateText.innerHTML = SPACE_STRING + "0.00";
+};
+
+const resetLuckresNum = () => {
+  resetInfo("luckres-num", LUCKRES_NUM_DIGIT);
+};
+
+const resetLuckresRate = () => {
+  const rateText = document.getElementById("luckres-rate");
+  rateText.innerHTML = SPACE_STRING + "0.00";
 };
 
 const countStuck = () => {
@@ -227,7 +245,61 @@ const countExLose = () => {
   exloseText.innerHTML = innerText;
 };
 
-const calcRate = () => {
+const countTreasureNum = () => {
+  const treasureNumText = document.getElementById("treasure-num");
+  const treasureNum = Number(treasureNumText.textContent);
+
+  // エラー処理
+  if (isNaN(treasureNum)) {
+    resetExLose();
+    return;
+  }
+
+  let innerNum = treasureNum;
+  let innerText = "";
+
+  // 数値の変更
+  innerNum = Math.floor(innerNum);
+  innerNum = Math.max(innerNum, 0);
+  innerNum++;
+
+  // 空白を入れた文字列の作成
+  const digit = innerNum.toString().length;
+  innerText += makeSpace(digit, TREASURE_NUM_DIGIT);
+  innerText += innerNum.toString();
+
+  // 文字列の置換
+  treasureNumText.innerHTML = innerText;
+};
+
+const countLuckresNum = () => {
+  const luckresNumText = document.getElementById("luckres-num");
+  const luckresNum = Number(luckresNumText.textContent);
+
+  // エラー処理
+  if (isNaN(luckresNum)) {
+    resetExLose();
+    return;
+  }
+
+  let innerNum = luckresNum;
+  let innerText = "";
+
+  // 数値の変更
+  innerNum = Math.floor(innerNum);
+  innerNum = Math.max(innerNum, 0);
+  innerNum++;
+
+  // 空白を入れた文字列の作成
+  const digit = innerNum.toString().length;
+  innerText += makeSpace(digit, LUCKRES_NUM_DIGIT);
+  innerText += innerNum.toString();
+
+  // 文字列の置換
+  luckresNumText.innerHTML = innerText;
+};
+
+const calcEncountRate = () => {
   const totalText = document.getElementById("total");
   const totalNum = Number(totalText.textContent);
   const encountText = document.getElementById("encount");
@@ -235,9 +307,8 @@ const calcRate = () => {
   const rateText = document.getElementById("rate");
 
   // エラー処理
-  if (isNaN(totalNum) || isNaN(encountNum) || totalNum <= 0) {
+  if (totalNum <= 0) {
     resetTotal();
-    resetEncount();
     resetRate();
     isEncount = false;
     return;
@@ -250,6 +321,58 @@ const calcRate = () => {
   );
   const digit = rate.toString().length;
   innerText += makeSpace(digit, RATE_DIGIT);
+  innerText += rate;
+  rateText.innerHTML = innerText;
+};
+
+const calcTreasureRate = () => {
+  const exloseText = document.getElementById("exlose");
+  const exloseNum = Number(exloseText.textContent);
+  const encountText = document.getElementById("encount");
+  const encountNum = Number(encountText.textContent);
+  const treasureNumText = document.getElementById("treasure-num");
+  const treasureNum = Number(treasureNumText.textContent);
+  const rateText = document.getElementById("treasure-rate");
+
+  // 小数点第２位まで求めて置換
+  let innerText = "";
+  let rate;
+  if (encountNum - exloseNum === 0) {
+    rate = 0;
+    rate = rate.toFixed(2);
+  } else {
+    rate = (
+      Math.ceil((treasureNum * 10000.0) / (encountNum - exloseNum)) / 100.0
+    ).toFixed(2);
+  }
+  const digit = rate.toString().length;
+  innerText += makeSpace(digit, TREASURE_RATE_DIGIT);
+  innerText += rate;
+  rateText.innerHTML = innerText;
+};
+
+const calcLuckresRate = () => {
+  const luckresNumText = document.getElementById("luckres-num");
+  const luckresNum = Number(luckresNumText.textContent);
+  const encountText = document.getElementById("encount");
+  const encountNum = Number(encountText.textContent);
+  const exloseText = document.getElementById("exlose");
+  const exloseNum = Number(exloseText.textContent);
+  const rateText = document.getElementById("luckres-rate");
+
+  // 小数点第２位まで求めて置換
+  let innerText = "";
+  let rate;
+  if (encountNum === 0) {
+    rate = 0;
+    rate = rate.toFixed(2);
+  } else {
+    rate = (
+      Math.ceil((luckresNum * 10000.0) / (encountNum - exloseNum)) / 100.0
+    ).toFixed(2);
+  }
+  const digit = rate.toString().length;
+  innerText += makeSpace(digit, LUCKRES_RATE_DIGIT);
   innerText += rate;
   rateText.innerHTML = innerText;
 };
@@ -341,18 +464,18 @@ const removeInput = (id, maxDigit) => {
 
 const displayKinkiInfo = () => {
   const treasureTr = document.getElementById("treasure");
-  const ruckresTr = document.getElementById("ruckres");
+  const luckresTr = document.getElementById("luckres");
 
   treasureTr.style.display = "";
-  ruckresTr.style.display = "";
+  luckresTr.style.display = "";
 };
 
 const hideKinkiInfo = () => {
   const treasureTr = document.getElementById("treasure");
-  const ruckresTr = document.getElementById("ruckres");
+  const luckresTr = document.getElementById("luckres");
 
   treasureTr.style.display = "none";
-  ruckresTr.style.display = "none";
+  luckresTr.style.display = "none";
 };
 
 const saveInfo = (id, dataNum) => {
@@ -382,6 +505,8 @@ const saveAllInfo = (dataNum) => {
   saveInfo("max", dataNum);
   saveInfo("total", dataNum);
   saveInfo("exlose", dataNum);
+  saveInfo("treasure-num", dataNum);
+  saveInfo("luckres-num", dataNum);
   saveKinkiMode();
 };
 
@@ -421,6 +546,8 @@ const loadAllInfo = (dataNum) => {
   loadInfo("max", dataNum, MAX_DIGIT);
   loadInfo("total", dataNum, TOTAL_DIGIT);
   loadInfo("exlose", dataNum, EXLOSE_DIGIT);
+  loadInfo("treasure-num", dataNum, TREASURE_NUM_DIGIT);
+  loadInfo("luckres-num", dataNum, LUCKRES_NUM_DIGIT);
   loadKinkiMode();
   isEncount = checkEncount();
   checkTotal();
@@ -440,7 +567,7 @@ const onClickLapButton = () => {
   if (!isEncount) {
     checkMin();
   }
-  calcRate();
+  calcEncountRate();
   saveAllInfo(nowData);
 };
 
@@ -458,12 +585,23 @@ const onClickEncountButton = () => {
   }
   countEncount();
   checkMin();
-  calcRate();
+
   resetStuck();
   countLuck(drop);
   if (drop === "0") {
     countExLose();
+  } else if (drop === "2" && isKinkiMode) {
+    countTreasureNum();
+  } else if (drop > 2 && isKinkiMode) {
+    countLuckresNum();
+    const isTreasure = confirm("至宝が発動した場合は[OK]を押してください");
+    if (isTreasure) {
+      countTreasureNum();
+    }
   }
+  calcEncountRate();
+  calcLuckresRate();
+  calcTreasureRate();
   saveAllInfo(nowData);
 };
 
@@ -490,6 +628,8 @@ const onClickEditButton = () => {
     removeInput("max", MAX_DIGIT);
     removeInput("total", TOTAL_DIGIT);
     removeInput("exlose", EXLOSE_DIGIT);
+    removeInput("treasure-num", TREASURE_NUM_DIGIT);
+    removeInput("luckres-num", LUCKRES_NUM_DIGIT);
     isEditNow = false;
 
     // 更新後の処理
@@ -497,7 +637,9 @@ const onClickEditButton = () => {
     checkTotal();
     checkMin();
     checkMax();
-    calcRate();
+    calcEncountRate();
+    calcLuckresRate();
+    calcTreasureRate();
     saveAllInfo(nowData);
   } else {
     editButton.innerHTML = "完了";
@@ -515,6 +657,8 @@ const onClickEditButton = () => {
     setInput("max");
     setInput("total");
     setInput("exlose");
+    setInput("treasure-num");
+    setInput("luckres-num");
     isEditNow = true;
   }
 };
@@ -536,7 +680,10 @@ const onClickResetButton = () => {
     resetMax();
     resetTotal();
     resetExLose();
-    resetKinkiMode();
+    resetTreasureNum();
+    resetTreasureRate();
+    resetLuckresNum();
+    resetLuckresRate();
     isEncount = false;
     saveAllInfo(nowData);
   }
@@ -581,7 +728,9 @@ const onClickKinkiCheckBox = () => {
       nowData = i;
       document.getElementById("now-data").innerHTML = nowData;
       loadAllInfo(nowData);
-      calcRate();
+      calcEncountRate();
+      calcLuckresRate();
+      calcTreasureRate();
       localStorage.setItem("last-data", nowData);
     });
   }
@@ -589,5 +738,7 @@ const onClickKinkiCheckBox = () => {
   nowData = lastData ? lastData : 1;
   document.getElementById("now-data").innerHTML = nowData;
   loadAllInfo(nowData);
-  calcRate();
+  calcEncountRate();
+  calcLuckresRate();
+  calcTreasureRate();
 })();
