@@ -555,13 +555,14 @@ const loadTitle = () => {
 
 const loadKinkiMode = () => {
   isKinkiMode = localStorage.getItem("kinkimode" + nowData) === "true";
+  const kinkiCheckBox = document.getElementById("kinki-mode");
   // 初期状態の変更
   if (isKinkiMode) {
     displayKinkiInfo();
-    const kinkiCheckBox = document.getElementById("kinki-mode");
     kinkiCheckBox.checked = true;
   } else {
     hideKinkiInfo();
+    kinkiCheckBox.checked = false;
   }
 };
 
