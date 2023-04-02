@@ -33,27 +33,27 @@
       </div>
       <table cellspacing="12" id="info-table">
         <tr class="center">
-          <td>
+          <td class="td-info">
             <span class="info-text">ハマり</span>
             <span id="stuck">&ensp;&ensp;0</span>
           </td>
-          <td>
+          <td class="td-info">
             <span class="info-text">ラック</span>
             <span id="luck">&ensp;&ensp;0</span>
           </td>
         </tr>
         <tr class="center">
-          <td>
+          <td class="td-info">
             <span class="info-text">遭遇数</span>
             <span id="encount">&ensp;&ensp;0</span>
           </td>
-          <td>
+          <td class="td-info">
             <span class="info-text">遭遇率</span>
             <span id="rate">&ensp;0.00</span>%
           </td>
         </tr>
         <tr class="center">
-          <td colspan="2">
+          <td colspan="2" class="td-info">
             <span class="info-text">最小/最大</span>
             <span id="min">&ensp;&ensp;0</span>/<span id="max"
               >&ensp;&ensp;&ensp;0</span
@@ -61,15 +61,35 @@
           </td>
         </tr>
         <tr class="center">
-          <td colspan="2">
+          <td colspan="2" class="td-info">
             <span class="info-text">総周回数</span>
             <span id="total">&ensp;&ensp;&ensp;&ensp;0</span>
           </td>
         </tr>
         <tr class="center">
-          <td colspan="2">
+          <td colspan="2" class="td-info">
             <span class="info-text">EX敗北数</span>
             <span id="exlose">&ensp;&ensp;&ensp;&ensp;0</span>
+          </td>
+        </tr>
+        <tr class="center" id="treasure">
+          <td class="td-info">
+            <span class="info-text">至宝数</span>
+            <span id="treasure-num">&ensp;&ensp;0</span>
+          </td>
+          <td class="td-info">
+            <span class="info-text">至宝率</span>
+            <span id="treasure-rate">&ensp;0.00</span>%
+          </td>
+        </tr>
+        <tr class="center" id="ruckres">
+          <td class="td-info">
+            <span class="info-text">ラキリザ数</span>
+            <span id="ruckres-num">&ensp;0</span>
+          </td>
+          <td class="td-info">
+            <span class="info-text">ラキリザ率</span>
+            <span id="ruckres-rate">&ensp;0.00</span>%
           </td>
         </tr>
       </table>
@@ -88,7 +108,11 @@
           <td><button class="btn-sub" id="btn-reset">リセット</button></td>
         </tr>
       </table>
+      <br />
+      <input id="kinki-mode" type="checkbox" />
+      <label for="kinki-mode">禁忌EXモードにする（至宝・ラキリザ）</label>
     </div>
+    <br />
     <div id="guide">
       <a href="https://github.com/Reyshi084/game-counter" target="_blank"
         >[詳しい使い方はこちら]</a

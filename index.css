@@ -112,6 +112,8 @@ footer {
 #info-table {
   background-color: #f0f8ff;
   font-size: x-large;
+  width: auto;
+  height: 200px;
 }
 
 #attention {
@@ -152,6 +154,11 @@ footer {
 
 .info-text {
   font-size: small;
+}
+
+.td-info {
+  padding: 0px;
+  margin: 0px;
 }
 
 td {

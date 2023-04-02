@@ -18,6 +18,7 @@ const MAX_SAVEDATA_NUM = 5;
 let isEncount = false;
 let isEditNow = false;
 let nowData = 1;
+let isKinkiMode = false;
 
 // -->
 
@@ -91,6 +92,10 @@ const resetTotal = () => {
 
 const resetExLose = () => {
   resetInfo("exlose", EXLOSE_DIGIT);
+};
+
+const resetKinkiMode = () => {
+  isKinkiMode = false;
 };
 
 const countStuck = () => {
@@ -334,6 +339,22 @@ const removeInput = (id, maxDigit) => {
   textElem.innerHTML = makeSpace(digit, maxDigit) + content;
 };
 
+const displayKinkiInfo = () => {
+  const treasureTr = document.getElementById("treasure");
+  const ruckresTr = document.getElementById("ruckres");
+
+  treasureTr.style.display = "";
+  ruckresTr.style.display = "";
+};
+
+const hideKinkiInfo = () => {
+  const treasureTr = document.getElementById("treasure");
+  const ruckresTr = document.getElementById("ruckres");
+
+  treasureTr.style.display = "none";
+  ruckresTr.style.display = "none";
+};
+
 const saveInfo = (id, dataNum) => {
   localStorage.setItem(
     id + dataNum,
@@ -348,6 +369,10 @@ const saveTitle = () => {
   );
 };
 
+const saveKinkiMode = () => {
+  localStorage.setItem("kinkimode" + nowData, isKinkiMode.toString());
+};
+
 const saveAllInfo = (dataNum) => {
   saveTitle();
   saveInfo("stuck", dataNum);
@@ -357,6 +382,7 @@ const saveAllInfo = (dataNum) => {
   saveInfo("max", dataNum);
   saveInfo("total", dataNum);
   saveInfo("exlose", dataNum);
+  saveKinkiMode();
 };
 
 const loadInfo = (id, dataNum, digitRange) => {
@@ -374,6 +400,18 @@ const loadTitle = () => {
   document.getElementById("data-title").innerHTML = data;
 };
 
+const loadKinkiMode = () => {
+  isKinkiMode = localStorage.getItem("kinkimode" + nowData) === "true";
+  // 初期状態の変更
+  if (isKinkiMode) {
+    displayKinkiInfo();
+    const kinkiCheckBox = document.getElementById("kinki-mode");
+    kinkiCheckBox.checked = true;
+  } else {
+    hideKinkiInfo();
+  }
+};
+
 const loadAllInfo = (dataNum) => {
   loadTitle();
   loadInfo("stuck", dataNum, STUCK_DIGIT);
@@ -383,6 +421,7 @@ const loadAllInfo = (dataNum) => {
   loadInfo("max", dataNum, MAX_DIGIT);
   loadInfo("total", dataNum, TOTAL_DIGIT);
   loadInfo("exlose", dataNum, EXLOSE_DIGIT);
+  loadKinkiMode();
   isEncount = checkEncount();
   checkTotal();
 };
@@ -497,9 +536,20 @@ const onClickResetButton = () => {
     resetMax();
     resetTotal();
     resetExLose();
+    resetKinkiMode();
     isEncount = false;
     saveAllInfo(nowData);
   }
+};
+
+const onClickKinkiCheckBox = () => {
+  isKinkiMode = !isKinkiMode;
+  if (isKinkiMode) {
+    displayKinkiInfo();
+  } else {
+    hideKinkiInfo();
+  }
+  saveAllInfo(nowData);
 };
 
 // -->
@@ -517,6 +567,9 @@ const onClickResetButton = () => {
 
   const resetButton = document.getElementById("btn-reset");
   resetButton.addEventListener("click", onClickResetButton);
+
+  const kinkiCheckBox = document.getElementById("kinki-mode");
+  kinkiCheckBox.addEventListener("change", onClickKinkiCheckBox);
 
   // セーブデータの切り替え
   for (let i = 1; i <= MAX_SAVEDATA_NUM; i++) {
