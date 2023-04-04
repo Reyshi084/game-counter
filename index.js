@@ -506,18 +506,7 @@ const hideTreasureCalcButton = () => {
   treasureBtn.style.display = "none";
 };
 
-const updateDate = () => {
-  const dateText = document.getElementById("last-date");
-  const nowDate = new Date();
-  const year = nowDate.getFullYear();
-  const month = ("00" + (nowDate.getMonth() + 1)).slice(-2);
-  const day = ("00" + nowDate.getDate()).slice(-2);
-  const hour = ("00" + nowDate.getHours()).slice(-2);
-  const min = ("00" + nowDate.getMinutes()).slice(-2);
-  const result =
-    "(" + year + "/" + month + "/" + day + " " + hour + ":" + min + ")";
-  dateText.innerHTML = result;
-};
+
 
 const saveInfo = (id, dataNum) => {
   localStorage.setItem(
@@ -536,6 +525,10 @@ const saveTitle = () => {
 const saveKinkiMode = () => {
   localStorage.setItem("kinkimode" + nowData, isKinkiMode.toString());
 };
+
+const saveLastDate = (dateStr) => {
+  localStorage.setItem("last-date" + nowData, dateStr);
+}
 
 const saveAllInfo = (dataNum) => {
   saveTitle();
@@ -579,6 +572,17 @@ const loadKinkiMode = () => {
   }
 };
 
+const loadLastDate = () => {
+  const dateText = document.getElementById("last-date");
+  const lastDateStr = localStorage.getItem("last-date" + nowData);
+  // データが存在しない時
+  if(lastDateStr === null) {
+    dateText.innerHTML = "";
+    return;
+  }
+  dateText.innerHTML = lastDateStr;
+};
+
 const loadAllInfo = (dataNum) => {
   loadTitle();
   loadInfo("stuck", dataNum, STUCK_DIGIT);
@@ -591,8 +595,24 @@ const loadAllInfo = (dataNum) => {
   loadInfo("treasure-num", dataNum, TREASURE_NUM_DIGIT);
   loadInfo("luckres-num", dataNum, LUCKRES_NUM_DIGIT);
   loadKinkiMode();
+  loadLastDate();
   isEncount = checkEncount();
   checkTotal();
+};
+
+const updateLastDate = () => {
+  const dateText = document.getElementById("last-date");
+  const nowDate = new Date();
+  const year = nowDate.getFullYear();
+  const month = ("00" + (nowDate.getMonth() + 1)).slice(-2);
+  const day = ("00" + nowDate.getDate()).slice(-2);
+  const hour = ("00" + nowDate.getHours()).slice(-2);
+  const min = ("00" + nowDate.getMinutes()).slice(-2);
+  const result =
+    "(" + year + "/" + month + "/" + day + " " + hour + ":" + min + ")";
+  dateText.innerHTML = result;
+
+  saveLastDate(result);
 };
 
 // -->
@@ -610,7 +630,7 @@ const onClickLapButton = () => {
     checkMin();
   }
   calcEncountRate();
-  updateDate();
+  updateLastDate();
   saveAllInfo(nowData);
 };
 
