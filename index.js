@@ -506,6 +506,19 @@ const hideTreasureCalcButton = () => {
   treasureBtn.style.display = "none";
 };
 
+const updateDate = () => {
+  const dateText = document.getElementById("last-date");
+  const nowDate = new Date();
+  const year = nowDate.getFullYear();
+  const month = ("00" + (nowDate.getMonth() + 1)).slice(-2);
+  const day = ("00" + nowDate.getDate()).slice(-2);
+  const hour = ("00" + nowDate.getHours()).slice(-2);
+  const min = ("00" + nowDate.getMinutes()).slice(-2);
+  const result =
+    "(" + year + "/" + month + "/" + day + " " + hour + ":" + min + ")";
+  dateText.innerHTML = result;
+};
+
 const saveInfo = (id, dataNum) => {
   localStorage.setItem(
     id + dataNum,
@@ -597,6 +610,7 @@ const onClickLapButton = () => {
     checkMin();
   }
   calcEncountRate();
+  updateDate();
   saveAllInfo(nowData);
 };
 
