@@ -506,8 +506,6 @@ const hideTreasureCalcButton = () => {
   treasureBtn.style.display = "none";
 };
 
-
-
 const saveInfo = (id, dataNum) => {
   localStorage.setItem(
     id + dataNum,
@@ -528,7 +526,7 @@ const saveKinkiMode = () => {
 
 const saveLastDate = (dateStr) => {
   localStorage.setItem("last-date" + nowData, dateStr);
-}
+};
 
 const saveAllInfo = (dataNum) => {
   saveTitle();
@@ -576,7 +574,7 @@ const loadLastDate = () => {
   const dateText = document.getElementById("last-date");
   const lastDateStr = localStorage.getItem("last-date" + nowData);
   // データが存在しない時
-  if(lastDateStr === null) {
+  if (lastDateStr === null) {
     dateText.innerHTML = "";
     return;
   }
