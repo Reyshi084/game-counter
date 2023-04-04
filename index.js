@@ -699,8 +699,6 @@ const onClickEditButton = () => {
     // 更新後の処理
     isEncount = checkEncount();
     checkTotal();
-    checkMin();
-    checkMax();
     calcEncountRate();
     calcLuckresRate();
     calcTreasureRate();
