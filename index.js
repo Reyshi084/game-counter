@@ -111,6 +111,11 @@ const resetLuckresNum = () => {
   resetInfo("luckres-num", LUCKRES_NUM_DIGIT);
 };
 
+const resetLastDate = () => {
+  const lastDateText = document.getElementById("last-date");
+  lastDateText.innerHTML = "";
+};
+
 const resetLuckresRate = () => {
   const rateText = document.getElementById("luckres-rate");
   rateText.innerHTML = SPACE_STRING + "0.00";
@@ -571,14 +576,14 @@ const loadKinkiMode = () => {
 };
 
 const loadLastDate = () => {
-  const dateText = document.getElementById("last-date");
+  const lastDateText = document.getElementById("last-date");
   const lastDateStr = localStorage.getItem("last-date" + nowData);
   // データが存在しない時
   if (lastDateStr === null) {
-    dateText.innerHTML = "";
+    lastDateText.innerHTML = "";
     return;
   }
-  dateText.innerHTML = lastDateStr;
+  lastDateText.innerHTML = lastDateStr;
 };
 
 const loadAllInfo = (dataNum) => {
@@ -747,8 +752,10 @@ const onClickResetButton = () => {
     resetTreasureRate();
     resetLuckresNum();
     resetLuckresRate();
+    resetLastDate();
     isEncount = false;
     saveAllInfo(nowData);
+    saveLastDate("");
   }
 };
 
