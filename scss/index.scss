@@ -1,0 +1,199 @@
+@use "font";
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#save {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-color: #f1f1f1;
+
+  #save-container {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+
+    .save-list {
+      margin: 0;
+      padding: 0;
+      width: 20%;
+      height: 100%;
+      text-align: center;
+
+      #save-text {
+        font-family: "Reggae", sans-serif;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      button {
+        font-family: "Reggae", sans-serif;
+        color: #000;
+        width: 100%;
+        height: 100%;
+        border: none;
+        text-align: center;
+
+        &#btn-save-1 {
+          background-color: #ff9090;
+          &:hover {
+            background-color: #d07070;
+          }
+        }
+
+        &#btn-save-2 {
+          background-color: #a0ffff;
+          &:hover {
+            background-color: #60d0d0;
+          }
+        }
+
+        &#btn-save-3 {
+          background-color: #90ff90;
+          &:hover {
+            background-color: #70d070;
+          }
+        }
+
+        &#btn-save-4 {
+          background-color: #ffff90;
+          &:hover {
+            background-color: #d0d050;
+          }
+        }
+
+        &#btn-save-5 {
+          background-color: #f0a0f0;
+          &:hover {
+            background-color: #d080d0;
+          }
+        }
+      }
+    }
+  }
+}
+
+h1 {
+  font-family: "Reggae", sans-serif;
+  color: #000;
+}
+
+#info {
+  font-family: "Reggae", sans-serif;
+  color: #000;
+
+  #data-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+  }
+
+  #span-last-date {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+  }
+
+  #info-table {
+    background-color: #f0f8ff;
+    width: auto;
+    height: 200px;
+
+    td {
+      white-space: nowrap;
+
+      .info-text {
+        font-size: small;
+      }
+
+      .info-text-sub {
+        font-size: xx-small;
+      }
+
+      .info-num {
+        font-size: x-large;
+      }
+
+      .info-num-sub {
+        font-size: large;
+      }
+    }
+  }
+}
+
+#btn-treasure-calc {
+  width: auto;
+  height: auto;
+  font-size: medium;
+  border: 1px #000 solid;
+  background-color: #ddd;
+  text-align: center;
+
+  &:hover {
+    background-color: #bbb;
+  }
+}
+
+#btn {
+  table {
+    tr {
+      td {
+        white-space: nowrap;
+
+        button {
+          font-family: "Reggae", sans-serif;
+          color: #000;
+
+          border: none;
+          background-color: #ddd;
+          text-align: center;
+
+          &:hover {
+            background-color: #bbb;
+          }
+
+          &.btn-main {
+            width: 4em;
+            height: 3em;
+            font-size: xx-large;
+          }
+
+          &.btn-sub {
+            width: 5.34em;
+            height: 2em;
+            font-size: x-large;
+          }
+        }
+      }
+    }
+  }
+}
+
+#guide {
+  font-size: larger;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#attention {
+  color: red;
+
+  #attention-list {
+    list-style: "*";
+    padding-left: 10px;
+  }
+}
+
+footer {
+  color: gray;
+}

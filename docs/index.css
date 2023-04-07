@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* 
 * このファイルは、Reggae One-Regularフォントのサブセットを使用しています。
 * 
@@ -6,18 +7,13 @@
 * 
 *   https://github.com/fontworks-fonts/Reggae
 */
-
 @font-face {
   font-family: "Reggae";
   src: url("font/subset-ReggaeOne-Regular.ttf") format("truetype");
 }
-
-#save,
-#info,
-button,
-h1 {
-  font-family: "Reggae", sans-serif;
-  color: #000;
+.center {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #save {
@@ -26,8 +22,7 @@ h1 {
   height: 50px;
   background-color: #f1f1f1;
 }
-
-#save-container {
+#save #save-container {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -36,8 +31,14 @@ h1 {
   align-items: center;
   height: 100%;
 }
-
-#save-text {
+#save #save-container .save-list {
+  margin: 0;
+  padding: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+}
+#save #save-container .save-list #save-text {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,93 +46,117 @@ h1 {
   font-weight: bold;
   font-size: 16px;
 }
-
-.save-list {
-  margin: 0;
-  padding: 0;
-  width: 20%;
-  height: 100%;
-  text-align: center;
-}
-
-button {
+#save #save-container .save-list button {
+  font-family: "Reggae", sans-serif;
+  color: #000;
   width: 100%;
   height: 100%;
   border: none;
-  background-color: #ddd;
   text-align: center;
 }
-
-#btn-save-1 {
+#save #save-container .save-list button#btn-save-1 {
   background-color: #ff9090;
 }
-
-#btn-save-2 {
-  background-color: #a0ffff;
-}
-
-#btn-save-3 {
-  background-color: #90ff90;
-}
-
-#btn-save-4 {
-  background-color: #ffff90;
-}
-
-#btn-save-5 {
-  background-color: #f0a0f0;
-}
-
-#btn-save-1:hover {
+#save #save-container .save-list button#btn-save-1:hover {
   background-color: #d07070;
 }
-
-#btn-save-2:hover {
+#save #save-container .save-list button#btn-save-2 {
+  background-color: #a0ffff;
+}
+#save #save-container .save-list button#btn-save-2:hover {
   background-color: #60d0d0;
 }
-
-#btn-save-3:hover {
+#save #save-container .save-list button#btn-save-3 {
+  background-color: #90ff90;
+}
+#save #save-container .save-list button#btn-save-3:hover {
   background-color: #70d070;
 }
-
-#btn-save-4:hover {
+#save #save-container .save-list button#btn-save-4 {
+  background-color: #ffff90;
+}
+#save #save-container .save-list button#btn-save-4:hover {
   background-color: #d0d050;
 }
-
-#btn-save-5:hover {
+#save #save-container .save-list button#btn-save-5 {
+  background-color: #f0a0f0;
+}
+#save #save-container .save-list button#btn-save-5:hover {
   background-color: #d080d0;
 }
 
-button:hover {
-  background-color: #bbb;
+h1 {
+  font-family: "Reggae", sans-serif;
+  color: #000;
 }
 
-footer {
-  color: gray;
+#info {
+  font-family: "Reggae", sans-serif;
+  color: #000;
 }
-
-#info-table {
+#info #data-title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+#info #span-last-date {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: small;
+}
+#info #info-table {
   background-color: #f0f8ff;
-  font-size: x-large;
   width: auto;
   height: 200px;
+}
+#info #info-table td {
+  white-space: nowrap;
+}
+#info #info-table td .info-text {
+  font-size: small;
+}
+#info #info-table td .info-text-sub {
+  font-size: xx-small;
+}
+#info #info-table td .info-num {
+  font-size: x-large;
+}
+#info #info-table td .info-num-sub {
+  font-size: large;
 }
 
 #btn-treasure-calc {
   width: auto;
   height: auto;
-  font-family: Arial, Helvetica, sans-serif;
   font-size: medium;
   border: 1px #000 solid;
+  background-color: #ddd;
+  text-align: center;
+}
+#btn-treasure-calc:hover {
+  background-color: #bbb;
 }
 
-#attention {
-  color: red;
+#btn table tr td {
+  white-space: nowrap;
 }
-
-#attention-list {
-  list-style: "*";
-  padding-left: 10px;
+#btn table tr td button {
+  font-family: "Reggae", sans-serif;
+  color: #000;
+  border: none;
+  background-color: #ddd;
+  text-align: center;
+}
+#btn table tr td button:hover {
+  background-color: #bbb;
+}
+#btn table tr td button.btn-main {
+  width: 4em;
+  height: 3em;
+  font-size: xx-large;
+}
+#btn table tr td button.btn-sub {
+  width: 5.34em;
+  height: 2em;
+  font-size: x-large;
 }
 
 #guide {
@@ -140,45 +165,14 @@ footer {
   margin-bottom: 20px;
 }
 
-#data-title {
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+#attention {
+  color: red;
+}
+#attention #attention-list {
+  list-style: "*";
+  padding-left: 10px;
 }
 
-#span-last-date {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: small;
-}
-
-.btn-main {
-  width: 4em;
-  height: 3em;
-  font-size: xx-large;
-}
-
-.btn-sub {
-  width: 5.34em;
-  height: 2em;
-  font-size: x-large;
-}
-
-.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.info-text {
-  font-size: small;
-}
-
-.info-text-sub {
-  font-size: xx-small;
-}
-
-.info-num-sub {
-  font-size: large;
-}
-
-td {
-  white-space: nowrap;
+footer {
+  color: gray;
 }
