@@ -39,6 +39,8 @@
   text-align: center;
 }
 #save #save-container .save-list #save-text {
+  font-family: "Reggae", sans-serif;
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
