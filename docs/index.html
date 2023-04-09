@@ -29,44 +29,78 @@
     <h1>モンスト EXカウンター</h1>
     <div id="info">
       <div>
-        DATA <span id="now-data">1</span> : <span id="data-title"></span>
+        DATA<span id="now-data">1</span>:<span id="data-title"></span
+        ><span id="span-last-date">&ensp;<span id="last-date"></span></span>
       </div>
       <table cellspacing="12" id="info-table">
         <tr class="center">
-          <td>
+          <td class="td-info">
             <span class="info-text">ハマり</span>
-            <span id="stuck">&ensp;&ensp;0</span>
+            <span id="stuck" class="info-num">&ensp;&ensp;0</span>
           </td>
-          <td>
+          <td class="td-info">
             <span class="info-text">ラック</span>
-            <span id="luck">&ensp;&ensp;0</span>
+            <span id="luck" class="info-num">&ensp;&ensp;0</span>
           </td>
         </tr>
         <tr class="center">
-          <td>
+          <td class="td-info">
             <span class="info-text">遭遇数</span>
-            <span id="encount">&ensp;&ensp;0</span>
+            <span id="encount" class="info-num">&ensp;&ensp;0</span>
           </td>
-          <td>
+          <td class="td-info">
             <span class="info-text">遭遇率</span>
-            <span id="rate">&ensp;0.00</span>%
+            <span id="rate" class="info-num">&ensp;0.00</span>%
           </td>
         </tr>
         <tr class="center">
-          <td colspan="2">
-            <span class="info-text">最小/最大</span>
-            <span id="min">&ensp;&ensp;0</span>/<span id="max"
-              >&ensp;&ensp;&ensp;0</span
+          <td colspan="2" class="td-info">
+            <span class="info-text">最小/最大ハマり</span>
+            <span class="info-num">
+              <span id="min">&ensp;&ensp;0</span>/<span id="max"
+                >&ensp;&ensp;&ensp;0</span
+              ></span
             >
           </td>
         </tr>
         <tr class="center">
-          <td colspan="2">
+          <td colspan="2" class="td-info">
             <span class="info-text">総周回数</span>
-            <span id="total">&ensp;&ensp;&ensp;&ensp;0</span>
+            <span id="total" class="info-num">&ensp;&ensp;&ensp;&ensp;0</span>
+          </td>
+        </tr>
+        <tr class="center">
+          <td colspan="2" class="td-info">
+            <span class="info-text-sub">EX敗北数</span>
+            <span id="exlose" class="info-num-sub"
+              >&ensp;&ensp;&ensp;&ensp;0</span
+            >
+          </td>
+        </tr>
+        <tr class="center" id="treasure">
+          <td class="td-info">
+            <span class="info-text-sub">至宝発動数</span>
+            <span id="treasure-num" class="info-num-sub">&ensp;&ensp;0</span>
+          </td>
+          <td class="td-info">
+            <span class="info-text-sub">至宝発動率</span>
+            <span id="treasure-rate" class="info-num-sub">&ensp;0.00</span>%
+          </td>
+        </tr>
+        <tr class="center" id="luckres">
+          <td class="td-info">
+            <span class="info-text-sub">ラキリザ数</span>
+            <span id="luckres-num" class="info-num-sub">&ensp;&ensp;0</span>
+          </td>
+          <td class="td-info">
+            <span class="info-text-sub">ラキリザ率</span>
+            <span id="luckres-rate" class="info-num-sub">&ensp;0.00</span>%
           </td>
         </tr>
       </table>
+    </div>
+    <div id="precise-calc">
+      <button id="btn-treasure-calc">これまでの至宝発動数を計算する</button>
     </div>
     <br />
     <div id="btn">
@@ -82,7 +116,11 @@
           <td><button class="btn-sub" id="btn-reset">リセット</button></td>
         </tr>
       </table>
+      <br />
+      <input id="kinki-mode" type="checkbox" />
+      <label for="kinki-mode">禁忌EXモードにする</label>
     </div>
+    <br />
     <div id="guide">
       <a href="https://github.com/Reyshi084/game-counter" target="_blank"
         >[詳しい使い方はこちら]</a
@@ -95,6 +133,9 @@
         </li>
         <li>編集・ラック追加の際は半角数字で入力してください。</li>
         <li>不具合の報告・要望などは下記TwitterのDMや返信にてお願いします。</li>
+        <li>
+          配信等で使用される場合は、このページのURLまたは下記Twitterの情報を概要欄等に載せて頂ければ幸いです。
+        </li>
       </ul>
     </div>
     <div id="twitter">
