@@ -641,6 +641,12 @@ const updateLastDate = () => {
   saveLastDate(result);
 };
 
+const displayZeroHamariPopup = () => {
+  alert(
+    "遭遇ボタンを押すと総周回数がカウントされるようになります。\nEXステージ出現時には周回ボタンを押さず、クエスト終了時に遭遇ボタンを押すようにしてください。"
+  );
+};
+
 // -->
 
 // <!-- event listener
@@ -802,6 +808,9 @@ const onClickKinkiCheckBox = () => {
 
 const onClickZeroHamariCheckBox = () => {
   isZeroHamariMode = !isZeroHamariMode;
+  if (isZeroHamariMode) {
+    displayZeroHamariPopup();
+  }
   saveAllInfo(nowData);
 };
 
