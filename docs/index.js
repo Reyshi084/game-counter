@@ -22,6 +22,7 @@ const MAX_SAVEDATA_NUM = 5;
 let isEncount = false;
 let isEditNow = false;
 let nowData = 1;
+let isZeroHamariMode = false;
 let isKinkiMode = false;
 
 // -->
@@ -169,33 +170,6 @@ const countLuck = (drop) => {
   luckText.innerHTML = innerText;
 };
 
-const countEncount = () => {
-  const encountText = document.getElementById("encount");
-  const encountNum = Number(encountText.textContent);
-
-  // エラー処理
-  if (isNaN(encountNum)) {
-    resetEncount();
-    return;
-  }
-
-  let innerNum = encountNum;
-  let innerText = "";
-
-  // 数値の変更
-  innerNum = Math.floor(innerNum);
-  innerNum = Math.max(innerNum, 0);
-  innerNum++;
-
-  // 空白を入れた文字列の作成
-  const digit = innerNum.toString().length;
-  innerText += makeSpace(digit, ENCOUNT_DIGIT);
-  innerText += innerNum.toString();
-  // 文字列の置換
-  encountText.innerHTML = innerText;
-  isEncount = true;
-};
-
 const countTotal = () => {
   const totalText = document.getElementById("total");
   const totalNum = Number(totalText.textContent);
@@ -221,6 +195,38 @@ const countTotal = () => {
 
   // 文字列の置換
   totalText.innerHTML = innerText;
+};
+
+const countEncount = () => {
+  const encountText = document.getElementById("encount");
+  const encountNum = Number(encountText.textContent);
+
+  // エラー処理
+  if (isNaN(encountNum)) {
+    resetEncount();
+    return;
+  }
+
+  let innerNum = encountNum;
+  let innerText = "";
+
+  // 数値の変更
+  innerNum = Math.floor(innerNum);
+  innerNum = Math.max(innerNum, 0);
+  innerNum++;
+
+  // 空白を入れた文字列の作成
+  const digit = innerNum.toString().length;
+  innerText += makeSpace(digit, ENCOUNT_DIGIT);
+  innerText += innerNum.toString();
+  // 文字列の置換
+  encountText.innerHTML = innerText;
+  isEncount = true;
+
+  // 0ハマりモード時に総周回数をカウントする
+  if (isZeroHamariMode) {
+    countTotal();
+  }
 };
 
 const countExLose = () => {
@@ -529,6 +535,10 @@ const saveKinkiMode = () => {
   localStorage.setItem("kinkimode" + nowData, isKinkiMode.toString());
 };
 
+const saveZeroHamariMode = () => {
+  localStorage.setItem("zerohamari-mode", isZeroHamariMode.toString());
+};
+
 const saveLastDate = (dateStr) => {
   localStorage.setItem("last-date" + nowData, dateStr);
 };
@@ -544,6 +554,7 @@ const saveAllInfo = (dataNum) => {
   saveInfo("exlose", dataNum);
   saveInfo("treasure-num", dataNum);
   saveInfo("luckres-num", dataNum);
+  saveZeroHamariMode();
   saveKinkiMode();
 };
 
@@ -575,6 +586,17 @@ const loadKinkiMode = () => {
   }
 };
 
+const loadZeroHamariMode = () => {
+  isZeroHamariMode = localStorage.getItem("zerohamari-mode") === "true";
+  const zeroHamariCheckBox = document.getElementById("zerohamari-mode");
+  // 初期状態の変更
+  if (isZeroHamariMode) {
+    zeroHamariCheckBox.checked = true;
+  } else {
+    zeroHamariCheckBox.checked = false;
+  }
+};
+
 const loadLastDate = () => {
   const lastDateText = document.getElementById("last-date");
   const lastDateStr = localStorage.getItem("last-date" + nowData);
@@ -597,6 +619,7 @@ const loadAllInfo = (dataNum) => {
   loadInfo("exlose", dataNum, EXLOSE_DIGIT);
   loadInfo("treasure-num", dataNum, TREASURE_NUM_DIGIT);
   loadInfo("luckres-num", dataNum, LUCKRES_NUM_DIGIT);
+  loadZeroHamariMode();
   loadKinkiMode();
   loadLastDate();
   isEncount = checkEncount();
@@ -777,6 +800,11 @@ const onClickKinkiCheckBox = () => {
   saveAllInfo(nowData);
 };
 
+const onClickZeroHamariCheckBox = () => {
+  isZeroHamariMode = !isZeroHamariMode;
+  saveAllInfo(nowData);
+};
+
 const onClickTreasureCalcButton = () => {
   const conf = confirm(
     "至宝発動数以外の情報を入力した状態で[OK]を押して次に進んでください"
@@ -844,6 +872,9 @@ const onClickTreasureCalcButton = () => {
 
   const resetButton = document.getElementById("btn-reset");
   resetButton.addEventListener("click", onClickResetButton);
+
+  const zeroHamariCheckBox = document.getElementById("zerohamari-mode");
+  zeroHamariCheckBox.addEventListener("change", onClickZeroHamariCheckBox);
 
   const kinkiCheckBox = document.getElementById("kinki-mode");
   kinkiCheckBox.addEventListener("change", onClickKinkiCheckBox);
