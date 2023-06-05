@@ -697,6 +697,7 @@ const onClickEncountButton = () => {
   calcEncountRate();
   calcLuckresRate();
   calcTreasureRate();
+  updateLastDate();
   saveAllInfo(nowData);
 };
 
