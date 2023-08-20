@@ -177,6 +177,18 @@ h1 {
       }
     }
   }
+
+  .btn-bdata {
+    border: none;
+    font-weight: bold;
+    background-color: #ddd;
+    text-align: center;
+    height: 2.5em;
+
+    &:hover {
+      background-color: #bbb;
+    }
+  }
 }
 
 #guide {

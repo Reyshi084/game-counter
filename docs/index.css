@@ -160,6 +160,16 @@ h1 {
   height: 2em;
   font-size: x-large;
 }
+#btn .btn-bdata {
+  border: none;
+  font-weight: bold;
+  background-color: #ddd;
+  text-align: center;
+  height: 2.5em;
+}
+#btn .btn-bdata:hover {
+  background-color: #bbb;
+}
 
 #guide {
   font-size: larger;

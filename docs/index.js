@@ -647,6 +647,36 @@ const displayZeroHamariPopup = () => {
   );
 };
 
+const convertBase64ToSavedata = (bdata) => {
+  try {
+    const data = JSON.parse(atob(bdata));
+    return data?.is_savedata === true ? data : false;
+  } catch (e) {
+    // base64エンコーディングされたJSONデータでない場合
+    return false;
+  }
+};
+
+const convertSavedataToBase64 = () => {
+  return btoa(
+    JSON.stringify({
+      title: localStorage.getItem("title" + nowData),
+      stuck: localStorage.getItem("stuck" + nowData),
+      luck: localStorage.getItem("luck" + nowData),
+      encount: localStorage.getItem("encount" + nowData),
+      min: localStorage.getItem("min" + nowData),
+      max: localStorage.getItem("max" + nowData),
+      total: localStorage.getItem("total" + nowData),
+      exlose: localStorage.getItem("exlose" + nowData),
+      treasure_num: localStorage.getItem("treasure-num" + nowData),
+      luckres_num: localStorage.getItem("luckres-num" + nowData),
+      kinkimode: localStorage.getItem("kinkimode" + nowData),
+      last_date: localStorage.getItem("last-date" + nowData),
+      is_savedata: true
+    })
+  );
+};
+
 // -->
 
 // <!-- event listener
@@ -867,6 +897,48 @@ const onClickTreasureCalcButton = () => {
   saveAllInfo(nowData);
 };
 
+const onClickExportDataButton = () => {
+  saveAllInfo(nowData);
+  const bdata = convertSavedataToBase64();
+  navigator.clipboard.writeText(bdata).then(() => {
+    window.alert(
+      `クリップボードに"DATA${nowData}"のバックアップデータをコピーしました`
+    );
+  });
+};
+
+const onClickImportDataButton = () => {
+  const bdata = prompt(
+    `バックアップデータをペーストしてください\n※注意: 現在表示されている"DATA${nowData}"に上書きされます`
+  );
+  if (bdata === null) {
+    return;
+  }
+
+  const data = convertBase64ToSavedata(bdata);
+  if (!data) {
+    window.alert("正しいバックアップデータではありません");
+  } else {
+    localStorage.setItem("title" + nowData, data.title);
+    localStorage.setItem("stuck" + nowData, data.stuck);
+    localStorage.setItem("luck" + nowData, data.luck);
+    localStorage.setItem("encount" + nowData, data.encount);
+    localStorage.setItem("min" + nowData, data.min);
+    localStorage.setItem("max" + nowData, data.max);
+    localStorage.setItem("total" + nowData, data.total);
+    localStorage.setItem("exlose" + nowData, data.exlose);
+    localStorage.setItem("treasure-num" + nowData, data.treasure_num);
+    localStorage.setItem("luckres-num" + nowData, data.luckres_num);
+    localStorage.setItem("kinkimode" + nowData, data.kinkimode);
+    localStorage.setItem("last-date" + nowData, data.last_date);
+
+    loadAllInfo(nowData);
+    calcEncountRate();
+    calcLuckresRate();
+    calcTreasureRate();
+  }
+};
+
 // -->
 
 // onLoad
@@ -891,6 +963,12 @@ const onClickTreasureCalcButton = () => {
 
   const treasureCalcButton = document.getElementById("btn-treasure-calc");
   treasureCalcButton.addEventListener("click", onClickTreasureCalcButton);
+
+  const importSavedataButton = document.getElementById("btn-import-bdata");
+  importSavedataButton.addEventListener("click", onClickImportDataButton);
+
+  const exportSavedataButton = document.getElementById("btn-export-bdata");
+  exportSavedataButton.addEventListener("click", onClickExportDataButton);
 
   // セーブデータの切り替え
   for (let i = 1; i <= MAX_SAVEDATA_NUM; i++) {
