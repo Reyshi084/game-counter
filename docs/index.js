@@ -649,32 +649,38 @@ const displayZeroHamariPopup = () => {
 
 const convertBase64ToSavedata = (bdata) => {
   try {
-    const data = JSON.parse(atob(bdata));
+    const data = JSON.parse(decodeURIComponent(atob(bdata)));
     return data?.is_savedata === true ? data : false;
   } catch (e) {
-    // base64エンコーディングされたJSONデータでない場合
     return false;
   }
 };
 
 const convertSavedataToBase64 = () => {
-  return btoa(
-    JSON.stringify({
-      title: localStorage.getItem("title" + nowData),
-      stuck: localStorage.getItem("stuck" + nowData),
-      luck: localStorage.getItem("luck" + nowData),
-      encount: localStorage.getItem("encount" + nowData),
-      min: localStorage.getItem("min" + nowData),
-      max: localStorage.getItem("max" + nowData),
-      total: localStorage.getItem("total" + nowData),
-      exlose: localStorage.getItem("exlose" + nowData),
-      treasure_num: localStorage.getItem("treasure-num" + nowData),
-      luckres_num: localStorage.getItem("luckres-num" + nowData),
-      kinkimode: localStorage.getItem("kinkimode" + nowData),
-      last_date: localStorage.getItem("last-date" + nowData),
-      is_savedata: true
-    })
-  );
+  try {
+    return btoa(
+      encodeURIComponent(
+        JSON.stringify({
+          title: localStorage.getItem("title" + nowData),
+          stuck: localStorage.getItem("stuck" + nowData),
+          luck: localStorage.getItem("luck" + nowData),
+          encount: localStorage.getItem("encount" + nowData),
+          min: localStorage.getItem("min" + nowData),
+          max: localStorage.getItem("max" + nowData),
+          total: localStorage.getItem("total" + nowData),
+          exlose: localStorage.getItem("exlose" + nowData),
+          treasure_num: localStorage.getItem("treasure-num" + nowData),
+          luckres_num: localStorage.getItem("luckres-num" + nowData),
+          kinkimode: localStorage.getItem("kinkimode" + nowData),
+          last_date: localStorage.getItem("last-date" + nowData),
+          is_savedata: true
+        })
+      )
+    );
+  } catch (e) {
+    window.alert("バックアップを取得できませんでした");
+    return false;
+  }
 };
 
 // -->
