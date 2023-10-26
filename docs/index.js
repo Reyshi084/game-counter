@@ -477,7 +477,7 @@ const removeInputTitle = () => {
   if (content === "") {
     content = "EX" + nowData;
   }
-  titleElem.innerHTML = content;
+  titleElem.textContent = content;
 };
 
 const removeInput = (id, maxDigit) => {
@@ -527,7 +527,7 @@ const saveInfo = (id, dataNum) => {
 const saveTitle = () => {
   localStorage.setItem(
     "title" + nowData,
-    document.getElementById("data-title").innerHTML
+    document.getElementById("data-title").textContent
   );
 };
 
@@ -570,7 +570,7 @@ const loadTitle = () => {
   if (!data) {
     data = "EX" + nowData;
   }
-  document.getElementById("data-title").innerHTML = data;
+  document.getElementById("data-title").textContent = data;
 };
 
 const loadKinkiMode = () => {
@@ -904,6 +904,11 @@ const onClickTreasureCalcButton = () => {
 };
 
 const onClickExportDataButton = () => {
+  if (isEditNow) {
+    window.alert("編集中はバックアップの作成ができません");
+    return;
+  }
+
   saveAllInfo(nowData);
   const bdata = convertSavedataToBase64();
   navigator.clipboard.writeText(bdata).then(() => {
