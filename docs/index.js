@@ -919,6 +919,11 @@ const onClickExportDataButton = () => {
 };
 
 const onClickImportDataButton = () => {
+  if (isEditNow) {
+    window.alert("編集中はバックアップの復元ができません");
+    return;
+  }
+
   const bdata = prompt(
     `バックアップデータをペーストしてください\n※注意: 現在表示されている"DATA${nowData}"に上書きされます`
   );
