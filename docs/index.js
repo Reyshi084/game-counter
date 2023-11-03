@@ -486,7 +486,7 @@ const removeInputTitle = () => {
 const removeInput = (id, maxDigit) => {
   const inputElem = document.getElementById(id + "-input");
   const textElem = document.getElementById(id);
-  let content = Number(inputElem.value);
+  let content = Number(convertToHalfWidthNum(inputElem.value));
   if (isNaN(content) || content < 0) {
     content = 0;
   }
