@@ -37,6 +37,9 @@ const makeSpace = (digit, max) => {
   return text;
 };
 
+const convertToHalfWidthNum = (text) =>
+  text.replace(/[０-９]/g, (m) => "０１２３４５６７８９".indexOf(m));
+
 // １度でも遭遇したことがあるかどうか
 const checkEncount = () => {
   return Boolean(Number(document.getElementById("encount").textContent));
@@ -483,7 +486,7 @@ const removeInputTitle = () => {
 const removeInput = (id, maxDigit) => {
   const inputElem = document.getElementById(id + "-input");
   const textElem = document.getElementById(id);
-  let content = Number(inputElem.value);
+  let content = Number(convertToHalfWidthNum(inputElem.value));
   if (isNaN(content) || content < 0) {
     content = 0;
   }
@@ -706,10 +709,13 @@ const onClickEncountButton = () => {
   if (isEditNow) {
     return;
   }
-  const drop = prompt(
-    "ドロップ数を入力（負けてしまった場合は0を入力してください）",
-    DEFAULT_DROP
+  const drop = convertToHalfWidthNum(
+    prompt(
+      "ドロップ数を入力（負けてしまった場合は0を入力してください）",
+      DEFAULT_DROP
+    )
   );
+  console.log(drop);
   // キャンセルボタンが押されたとき
   if (drop === null) {
     return;
@@ -874,17 +880,18 @@ const onClickTreasureCalcButton = () => {
   }
 
   // ラキリザ合計ドロップ数
-  const retTotal = prompt(
-    "全" + luckresNum + "回のラキリザで合計何ドロップしたか入力"
+  const retTotal = convertToHalfWidthNum(
+    prompt("全" + luckresNum + "回のラキリザで合計何ドロップしたか入力")
   );
+
   if (retTotal === null) {
     return;
   }
   const luckresTotalLuck = Number(retTotal);
 
   // ラキリザ合計至宝発動数
-  const retTreasure = prompt(
-    "全" + luckresNum + "回のラキリザのうち何回至宝が発動したか入力"
+  const retTreasure = convertToHalfWidthNum(
+    prompt("全" + luckresNum + "回のラキリザのうち何回至宝が発動したか入力")
   );
   if (retTreasure === null) {
     return;
@@ -924,8 +931,10 @@ const onClickImportDataButton = () => {
     return;
   }
 
-  const bdata = prompt(
-    `バックアップデータをペーストしてください\n※注意: 現在表示されている"DATA${nowData}"に上書きされます`
+  const bdata = convertToHalfWidthNum(
+    prompt(
+      `バックアップデータをペーストしてください\n※注意: 現在表示されている"DATA${nowData}"に上書きされます`
+    )
   );
   if (bdata === null) {
     return;
