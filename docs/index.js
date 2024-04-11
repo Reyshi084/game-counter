@@ -920,7 +920,7 @@ const onClickExportDataButton = () => {
   const bdata = convertSavedataToBase64();
   navigator.clipboard.writeText(bdata).then(() => {
     window.alert(
-      `クリップボードに"DATA${nowData}"のバックアップデータをコピーしました`
+      `クリップボードに"DATA${nowData}"のバックアップデータをコピーしました\nバックアップはデータが更新されるごとに行ってください`
     );
   });
 };
