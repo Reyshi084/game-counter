@@ -37,8 +37,11 @@ const makeSpace = (digit, max) => {
   return text;
 };
 
-const convertToHalfWidthNum = (text) =>
-  text.replace(/[０-９]/g, (m) => "０１２３４５６７８９".indexOf(m));
+const convertToHalfWidthNum = (text) => {
+  return text === null
+    ? null
+    : text.replace(/[０-９]/g, (m) => "０１２３４５６７８９".indexOf(m));
+};
 
 // １度でも遭遇したことがあるかどうか
 const checkEncount = () => {
@@ -715,7 +718,6 @@ const onClickEncountButton = () => {
       DEFAULT_DROP
     )
   );
-  console.log(drop);
   // キャンセルボタンが押されたとき
   if (drop === null) {
     return;
