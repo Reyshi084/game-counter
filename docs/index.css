@@ -45,9 +45,10 @@
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  -ms-overflow-style: none;
+  border: 1px solid #999;
+  -webkit-mask: linear-gradient(to right, transparent, black 30px, black 90%, transparent);
   scrollbar-width: none;
-  -webkit-mask: linear-gradient(to right, transparent, black 20px, black 90%, transparent);
+  -ms-overflow-style: none;
 }
 #save #save-container::-webkit-scrollbar {
   display: none;
