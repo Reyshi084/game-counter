@@ -103,6 +103,9 @@
 h1 {
   font-family: "Reggae", sans-serif;
   color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: min(9vmin, 32px);
 }
 
 #info {
