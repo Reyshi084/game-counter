@@ -17,7 +17,7 @@ const LUCKRES_NUM_DIGIT = 3;
 const LUCKRES_RATE_DIGIT = 5;
 
 const DEFAULT_DROP = "1";
-const MAX_SAVEDATA_NUM = 5;
+const MAX_SAVEDATA_NUM = 10;
 
 let isEncount = false;
 let isEditNow = false;

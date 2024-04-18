@@ -18,72 +18,77 @@
 
 #save {
   position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
   width: 100%;
   height: 50px;
   background-color: #f1f1f1;
 }
-#save #save-container {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100%;
-}
-#save #save-container .save-list {
-  margin: 0;
-  padding: 0;
-  width: 20%;
-  height: 100%;
-  text-align: center;
-}
-#save #save-container .save-list #save-text {
+#save #save-text {
   font-family: "Reggae", sans-serif;
   color: #000;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100%;
+  width: 70px;
   font-weight: bold;
   font-size: 16px;
 }
-#save #save-container .save-list button {
+#save #save-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-mask: linear-gradient(to right, transparent, black 20px, black 90%, transparent);
+}
+#save #save-container::-webkit-scrollbar {
+  display: none;
+}
+#save #save-container button {
   font-family: "Reggae", sans-serif;
   color: #000;
   width: 100%;
   height: 100%;
+  min-width: 50px;
   border: none;
   text-align: center;
 }
-#save #save-container .save-list button#btn-save-1 {
+#save #save-container button#btn-save-1, #save #save-container button#btn-save-6 {
   background-color: #ff9090;
 }
-#save #save-container .save-list button#btn-save-1:hover {
+#save #save-container button#btn-save-1:hover, #save #save-container button#btn-save-6:hover {
   background-color: #d07070;
 }
-#save #save-container .save-list button#btn-save-2 {
+#save #save-container button#btn-save-2, #save #save-container button#btn-save-7 {
   background-color: #a0ffff;
 }
-#save #save-container .save-list button#btn-save-2:hover {
+#save #save-container button#btn-save-2:hover, #save #save-container button#btn-save-7:hover {
   background-color: #60d0d0;
 }
-#save #save-container .save-list button#btn-save-3 {
+#save #save-container button#btn-save-3, #save #save-container button#btn-save-8 {
   background-color: #90ff90;
 }
-#save #save-container .save-list button#btn-save-3:hover {
+#save #save-container button#btn-save-3:hover, #save #save-container button#btn-save-8:hover {
   background-color: #70d070;
 }
-#save #save-container .save-list button#btn-save-4 {
+#save #save-container button#btn-save-4, #save #save-container button#btn-save-9 {
   background-color: #ffff90;
 }
-#save #save-container .save-list button#btn-save-4:hover {
+#save #save-container button#btn-save-4:hover, #save #save-container button#btn-save-9:hover {
   background-color: #d0d050;
 }
-#save #save-container .save-list button#btn-save-5 {
+#save #save-container button#btn-save-5, #save #save-container button#btn-save-10 {
   background-color: #f0a0f0;
 }
-#save #save-container .save-list button#btn-save-5:hover {
+#save #save-container button#btn-save-5:hover, #save #save-container button#btn-save-10:hover {
   background-color: #d080d0;
 }
 
