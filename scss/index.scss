@@ -12,7 +12,7 @@
   align-items: center;
   width: 100%;
   height: 50px;
-  background-color: #f1f1f1;
+  background-color: #eee;
 
   #save-text {
     font-family: "Reggae", sans-serif;
@@ -24,6 +24,21 @@
     width: 70px;
     font-weight: bold;
     font-size: 16px;
+  }
+
+  #option {
+    font-family: "Reggae", sans-serif;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 70px;
+    font-weight: bold;
+    font-size: 16px;
+    &:hover {
+      background-color: #ccc;
+    }
   }
 
   #save-container {
@@ -61,40 +76,129 @@
       &#btn-save-1,
       &#btn-save-6 {
         background-color: #ff9090;
-        &:hover {
-          background-color: #d07070;
-        }
       }
 
       &#btn-save-2,
       &#btn-save-7 {
         background-color: #a0ffff;
-        &:hover {
-          background-color: #60d0d0;
-        }
       }
 
       &#btn-save-3,
       &#btn-save-8 {
         background-color: #90ff90;
-        &:hover {
-          background-color: #70d070;
-        }
       }
 
       &#btn-save-4,
       &#btn-save-9 {
         background-color: #ffff90;
-        &:hover {
-          background-color: #d0d050;
-        }
       }
 
       &#btn-save-5,
       &#btn-save-10 {
         background-color: #f0a0f0;
+      }
+    }
+  }
+}
+
+#modal-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9;
+}
+
+#modal-container::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+#modal-container.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#modal-body {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 300px;
+  width: 90%;
+  height: 50%;
+}
+
+#modal-close {
+  position: absolute;
+  top: -32px;
+  right: 0;
+  font-size: 18px;
+  color: #fff;
+  background: rgba(0, 0, 0, 60%);
+  padding: 4px 15px;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+}
+
+#modal-content {
+  background: #fff;
+  border: 2px solid #000;
+  text-align: left;
+  padding: 30px;
+  font-weight: bold;
+  height: 90%;
+  overflow-y: scroll;
+
+  .opt-subtitle {
+    text-align: center;
+  }
+
+  > div {
+    margin-bottom: 10px;
+
+    div {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      label {
+        margin-left: 10px;
+      }
+
+      input[type="color"] {
+        border: none;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+
         &:hover {
-          background-color: #d080d0;
+          background-color: #f0f0f0;
+        }
+      }
+
+      input[type="checkbox"] {
+        margin: 5px;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #e6e6e6;
         }
       }
     }
@@ -111,6 +215,9 @@ h1 {
 
 #info {
   font-family: "Reggae", sans-serif;
+  padding-bottom: 14px;
+  padding-left: 14px;
+  padding-top: 4px;
   color: #000;
 
   #data-title {
