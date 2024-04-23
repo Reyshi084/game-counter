@@ -17,7 +17,7 @@ const LUCKRES_NUM_DIGIT = 3;
 const LUCKRES_RATE_DIGIT = 5;
 
 const DEFAULT_DROP = "1";
-const MAX_SAVEDATA_NUM = 5;
+const MAX_SAVEDATA_NUM = 10;
 
 let isEncount = false;
 let isEditNow = false;
@@ -37,8 +37,11 @@ const makeSpace = (digit, max) => {
   return text;
 };
 
-const convertToHalfWidthNum = (text) =>
-  text.replace(/[０-９]/g, (m) => "０１２３４５６７８９".indexOf(m));
+const convertToHalfWidthNum = (text) => {
+  return text === null
+    ? null
+    : text.replace(/[０-９]/g, (m) => "０１２３４５６７８９".indexOf(m));
+};
 
 // １度でも遭遇したことがあるかどうか
 const checkEncount = () => {
@@ -546,6 +549,22 @@ const saveLastDate = (dateStr) => {
   localStorage.setItem("last-date" + nowData, dateStr);
 };
 
+const saveDataColor = (color) => {
+  localStorage.setItem("data-color" + nowData, color);
+};
+
+const saveBgColor = (color) => {
+  localStorage.setItem("bg-color", color);
+};
+
+const saveStringColor = (color) => {
+  localStorage.setItem("str-color", color);
+};
+
+const saveTableColor = (color) => {
+  localStorage.setItem("table-color", color);
+};
+
 const saveAllInfo = (dataNum) => {
   saveTitle();
   saveInfo("stuck", dataNum);
@@ -611,6 +630,46 @@ const loadLastDate = () => {
   lastDateText.innerHTML = lastDateStr;
 };
 
+const loadAllDataColor = () => {
+  for (let i = 1; i <= MAX_SAVEDATA_NUM; i++) {
+    const dataBtn = document.getElementById("btn-save-" + i);
+    const dataColor = localStorage.getItem("data-color" + i);
+    if (dataColor !== null) {
+      dataBtn.style.backgroundColor = dataColor;
+    }
+  }
+};
+
+const loadBgColor = () => {
+  const info = document.getElementById("info");
+  const bgColor = localStorage.getItem("bg-color");
+  if (bgColor === null) {
+    return;
+  }
+  info.style.backgroundColor = bgColor;
+  document.getElementById("bg-color").value = bgColor;
+};
+
+const loadStringColor = () => {
+  const info = document.getElementById("info");
+  const stringColor = localStorage.getItem("str-color");
+  if (stringColor === null) {
+    return;
+  }
+  info.style.color = stringColor;
+  document.getElementById("str-color").value = stringColor;
+};
+
+const loadTableColor = () => {
+  const table = document.getElementById("info-table");
+  const tableColor = localStorage.getItem("table-color");
+  if (tableColor === null) {
+    return;
+  }
+  table.style.backgroundColor = tableColor;
+  document.getElementById("table-color").value = tableColor;
+};
+
 const loadAllInfo = (dataNum) => {
   loadTitle();
   loadInfo("stuck", dataNum, STUCK_DIGIT);
@@ -625,6 +684,9 @@ const loadAllInfo = (dataNum) => {
   loadZeroHamariMode();
   loadKinkiMode();
   loadLastDate();
+  loadBgColor();
+  loadStringColor();
+  loadTableColor();
   isEncount = checkEncount();
   checkTotal();
 };
@@ -715,7 +777,6 @@ const onClickEncountButton = () => {
       DEFAULT_DROP
     )
   );
-  console.log(drop);
   // キャンセルボタンが押されたとき
   if (drop === null) {
     return;
@@ -920,7 +981,7 @@ const onClickExportDataButton = () => {
   const bdata = convertSavedataToBase64();
   navigator.clipboard.writeText(bdata).then(() => {
     window.alert(
-      `クリップボードに"DATA${nowData}"のバックアップデータをコピーしました`
+      `クリップボードに"DATA${nowData}"のバックアップデータをコピーしました\nバックアップはデータが更新されるごとに行ってください`
     );
   });
 };
@@ -964,6 +1025,48 @@ const onClickImportDataButton = () => {
   }
 };
 
+const onClickOptionButton = () => {
+  const container = document.getElementById("modal-container");
+  container.classList.add("active");
+};
+
+const changeDataColorBox = () => {
+  const dataBtn = document.getElementById("btn-save-" + nowData);
+  const color = document.getElementById("data-color").value;
+  dataBtn.style.backgroundColor = color;
+  saveDataColor(color);
+};
+
+const changeBgColorBox = () => {
+  const info = document.getElementById("info");
+  const color = document.getElementById("bg-color").value;
+  info.style.backgroundColor = color;
+  saveBgColor(color);
+};
+
+const changeStringColorBox = () => {
+  const info = document.getElementById("info");
+  const color = document.getElementById("str-color").value;
+  info.style.color = color;
+  saveStringColor(color);
+};
+
+const changeTableColorBox = () => {
+  const table = document.getElementById("info-table");
+  const color = document.getElementById("table-color").value;
+  table.style.backgroundColor = color;
+  saveTableColor(color);
+};
+
+const changeSavedata = (nowData) => {
+  document.getElementById("now-data-title").innerHTML = nowData;
+  document.getElementById("now-data-option").innerHTML = nowData;
+  loadAllInfo(nowData);
+  calcEncountRate();
+  calcLuckresRate();
+  calcTreasureRate();
+};
+
 // -->
 
 // onLoad
@@ -986,6 +1089,18 @@ const onClickImportDataButton = () => {
   const kinkiCheckBox = document.getElementById("kinki-mode");
   kinkiCheckBox.addEventListener("change", onClickKinkiCheckBox);
 
+  const dataColorBox = document.getElementById("data-color");
+  dataColorBox.addEventListener("change", changeDataColorBox);
+
+  const bgColorBox = document.getElementById("bg-color");
+  bgColorBox.addEventListener("change", changeBgColorBox);
+
+  const stringColorBox = document.getElementById("str-color");
+  stringColorBox.addEventListener("change", changeStringColorBox);
+
+  const tableColorBox = document.getElementById("table-color");
+  tableColorBox.addEventListener("change", changeTableColorBox);
+
   const treasureCalcButton = document.getElementById("btn-treasure-calc");
   treasureCalcButton.addEventListener("click", onClickTreasureCalcButton);
 
@@ -995,6 +1110,9 @@ const onClickImportDataButton = () => {
   const exportSavedataButton = document.getElementById("btn-export-bdata");
   exportSavedataButton.addEventListener("click", onClickExportDataButton);
 
+  const optionButton = document.getElementById("option");
+  optionButton.addEventListener("click", onClickOptionButton);
+
   // セーブデータの切り替え
   for (let i = 1; i <= MAX_SAVEDATA_NUM; i++) {
     const savedataButton = document.getElementById("btn-save-" + i);
@@ -1003,20 +1121,22 @@ const onClickImportDataButton = () => {
         onClickEditButton();
       }
       nowData = i;
-      document.getElementById("now-data").innerHTML = nowData;
-      loadAllInfo(nowData);
-      calcEncountRate();
-      calcLuckresRate();
-      calcTreasureRate();
+      changeSavedata(nowData);
       localStorage.setItem("last-data", nowData);
     });
   }
   hideTreasureCalcButton();
   let lastData = localStorage.getItem("last-data");
   nowData = lastData ? lastData : 1;
-  document.getElementById("now-data").innerHTML = nowData;
-  loadAllInfo(nowData);
-  calcEncountRate();
-  calcLuckresRate();
-  calcTreasureRate();
+  changeSavedata(nowData);
+  loadAllDataColor();
 })();
+
+// 変数に要素を入れる
+const closeBtn = document.getElementById("modal-close");
+const container = document.getElementById("modal-container");
+
+//closeボタンをクリックしたらモーダルウィンドウを閉じる
+closeBtn.addEventListener("click", function () {
+  container.classList.remove("active");
+});

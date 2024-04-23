@@ -21,20 +21,84 @@
     <title>モンスト EXカウンター</title>
   </head>
   <body>
-    <div id="save">
-      <ul id="save-container">
-        <li class="save-list"><span id="save-text">DATA</span></li>
-        <li class="save-list"><button id="btn-save-1">1</button></li>
-        <li class="save-list"><button id="btn-save-2">2</button></li>
-        <li class="save-list"><button id="btn-save-3">3</button></li>
-        <li class="save-list"><button id="btn-save-4">4</button></li>
-        <li class="save-list"><button id="btn-save-5">5</button></li>
-      </ul>
+    <header id="save">
+      <div id="save-text">DATA</div>
+      <div id="save-container">
+        <button class="btn-save" id="btn-save-1">1</button>
+        <button class="btn-save" id="btn-save-2">2</button>
+        <button class="btn-save" id="btn-save-3">3</button>
+        <button class="btn-save" id="btn-save-4">4</button>
+        <button class="btn-save" id="btn-save-5">5</button>
+        <button class="btn-save" id="btn-save-6">6</button>
+        <button class="btn-save" id="btn-save-7">7</button>
+        <button class="btn-save" id="btn-save-8">8</button>
+        <button class="btn-save" id="btn-save-9">9</button>
+        <button class="btn-save" id="btn-save-10">10</button>
+      </div>
+      <div id="option"><img src="option.svg" width="36" height="36" /></div>
+    </header>
+    <div id="modal-container">
+      <div id="modal-body">
+        <button type="button" id="modal-close">×</button>
+        <div id="modal-content">
+          <div>
+            <div class="opt-subtitle">
+              〜〜データ<span id="now-data-option">n</span>の設定〜〜
+            </div>
+            <div>
+              <input id="data-color" type="color" value="#ffffff" />
+              <label for="data-color">上部の表示色</label>
+            </div>
+            <div id="opt-kinki">
+              <input id="kinki-mode" type="checkbox" />
+              <label for="kinki-mode">禁忌EXモードにする</label>
+            </div>
+          </div>
+          <br />
+          <div>
+            <div class="opt-subtitle">〜〜〜共通の設定〜〜〜</div>
+            <div id="opt-color">
+              <div>
+                <input
+                  id="bg-color"
+                  class="opt-color-list"
+                  type="color"
+                  value="#ffffff"
+                />
+                <label for="bg-color"> 背景の色</label>
+              </div>
+              <div>
+                <input
+                  id="str-color"
+                  class="opt-color-list"
+                  type="color"
+                  value="#000000"
+                />
+                <label for="str-color"> 文字の色</label>
+              </div>
+              <div>
+                <input
+                  id="table-color"
+                  class="opt-color-list"
+                  type="color"
+                  value="#f0f8ff"
+                />
+                <label for="table-color"> 表の色</label>
+              </div>
+            </div>
+            <div id="opt-0hamari">
+              <input id="zerohamari-mode" type="checkbox" />
+              <label for="zerohamari-mode">0ハマり表記にする</label>
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
     </div>
     <h1>モンストEXカウンター</h1>
     <div id="info">
       <div>
-        DATA<span id="now-data">1</span>:<span id="data-title"></span
+        DATA<span id="now-data-title">1</span>: <span id="data-title"></span
         ><span id="span-last-date">&ensp;<span id="last-date"></span></span>
       </div>
       <table cellspacing="12" id="info-table">
@@ -121,13 +185,6 @@
           <td><button class="btn-sub" id="btn-reset">リセット</button></td>
         </tr>
       </table>
-      <br />
-      <input id="zerohamari-mode" type="checkbox" />
-      <label for="zerohamari-mode">0ハマり表記にする</label>
-      <br />
-      <input id="kinki-mode" type="checkbox" />
-      <label for="kinki-mode">禁忌EXモードにする</label>
-      <br />
       <br />
       <button id="btn-export-bdata" class="btn-bdata">
         バックアップを作成

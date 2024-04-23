@@ -18,82 +18,188 @@
 
 #save {
   position: relative;
+  display: flex;
+  justify-content: start;
+  align-items: center;
   width: 100%;
   height: 50px;
-  background-color: #f1f1f1;
+  background-color: #eee;
 }
-#save #save-container {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100%;
-}
-#save #save-container .save-list {
-  margin: 0;
-  padding: 0;
-  width: 20%;
-  height: 100%;
-  text-align: center;
-}
-#save #save-container .save-list #save-text {
+#save #save-text {
   font-family: "Reggae", sans-serif;
   color: #000;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100%;
+  width: 70px;
   font-weight: bold;
   font-size: 16px;
 }
-#save #save-container .save-list button {
+#save #option {
+  font-family: "Reggae", sans-serif;
+  color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 70px;
+  font-weight: bold;
+  font-size: 16px;
+}
+#save #option:hover {
+  background-color: #ccc;
+}
+#save #save-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  border: 1px solid #999;
+  -webkit-mask: linear-gradient(to right, transparent, black 30px, black 90%, transparent);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#save #save-container::-webkit-scrollbar {
+  display: none;
+}
+#save #save-container button {
   font-family: "Reggae", sans-serif;
   color: #000;
   width: 100%;
   height: 100%;
+  min-width: 50px;
   border: none;
   text-align: center;
 }
-#save #save-container .save-list button#btn-save-1 {
+#save #save-container button#btn-save-1, #save #save-container button#btn-save-6 {
   background-color: #ff9090;
 }
-#save #save-container .save-list button#btn-save-1:hover {
-  background-color: #d07070;
-}
-#save #save-container .save-list button#btn-save-2 {
+#save #save-container button#btn-save-2, #save #save-container button#btn-save-7 {
   background-color: #a0ffff;
 }
-#save #save-container .save-list button#btn-save-2:hover {
-  background-color: #60d0d0;
-}
-#save #save-container .save-list button#btn-save-3 {
+#save #save-container button#btn-save-3, #save #save-container button#btn-save-8 {
   background-color: #90ff90;
 }
-#save #save-container .save-list button#btn-save-3:hover {
-  background-color: #70d070;
-}
-#save #save-container .save-list button#btn-save-4 {
+#save #save-container button#btn-save-4, #save #save-container button#btn-save-9 {
   background-color: #ffff90;
 }
-#save #save-container .save-list button#btn-save-4:hover {
-  background-color: #d0d050;
-}
-#save #save-container .save-list button#btn-save-5 {
+#save #save-container button#btn-save-5, #save #save-container button#btn-save-10 {
   background-color: #f0a0f0;
 }
-#save #save-container .save-list button#btn-save-5:hover {
-  background-color: #d080d0;
+
+#modal-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9;
+}
+
+#modal-container::before {
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+#modal-container.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+#modal-body {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  max-width: 300px;
+  width: 90%;
+  height: 50%;
+}
+
+#modal-close {
+  position: absolute;
+  top: -32px;
+  right: 0;
+  font-size: 18px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 4px 15px;
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+}
+
+#modal-content {
+  background: #fff;
+  border: 2px solid #000;
+  text-align: left;
+  padding: 30px;
+  font-weight: bold;
+  height: 90%;
+  overflow-y: scroll;
+}
+#modal-content .opt-subtitle {
+  text-align: center;
+}
+#modal-content > div {
+  margin-bottom: 10px;
+}
+#modal-content > div div {
+  margin-bottom: 10px;
+}
+#modal-content > div div:last-child {
+  margin-bottom: 0;
+}
+#modal-content > div div label {
+  margin-left: 10px;
+}
+#modal-content > div div input[type=color] {
+  border: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+#modal-content > div div input[type=color]:hover {
+  background-color: #f0f0f0;
+}
+#modal-content > div div input[type=checkbox] {
+  margin: 5px;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#modal-content > div div input[type=checkbox]:hover {
+  background-color: #e6e6e6;
 }
 
 h1 {
   font-family: "Reggae", sans-serif;
   color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: min(9vmin, 32px);
 }
 
 #info {
   font-family: "Reggae", sans-serif;
+  padding-bottom: 14px;
+  padding-left: 14px;
+  padding-top: 4px;
   color: #000;
 }
 #info #data-title {
