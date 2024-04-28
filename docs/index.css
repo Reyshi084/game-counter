@@ -11,11 +11,6 @@
   font-family: "Reggae";
   src: url("font/subset-ReggaeOne-Regular.ttf") format("truetype");
 }
-.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 #save {
   position: relative;
   display: flex;
@@ -105,20 +100,17 @@
   visibility: hidden;
   z-index: 9;
 }
-
 #modal-container::before {
   content: "";
   display: inline-block;
   vertical-align: middle;
   height: 100%;
 }
-
 #modal-container.active {
   opacity: 1;
   visibility: visible;
 }
-
-#modal-body {
+#modal-container #modal-body {
   position: relative;
   display: inline-block;
   vertical-align: middle;
@@ -126,8 +118,7 @@
   width: 90%;
   height: 50%;
 }
-
-#modal-close {
+#modal-container #modal-body #modal-close {
   position: absolute;
   top: -32px;
   right: 0;
@@ -138,8 +129,7 @@
   cursor: pointer;
   border-radius: 5px 5px 0 0;
 }
-
-#modal-content {
+#modal-container #modal-body #modal-content {
   background: #fff;
   border: 2px solid #000;
   text-align: left;
@@ -148,22 +138,22 @@
   height: 90%;
   overflow-y: scroll;
 }
-#modal-content .opt-subtitle {
+#modal-container #modal-body #modal-content .opt-subtitle {
   text-align: center;
 }
-#modal-content > div {
+#modal-container #modal-body #modal-content > div {
   margin-bottom: 10px;
 }
-#modal-content > div div {
+#modal-container #modal-body #modal-content > div div {
   margin-bottom: 10px;
 }
-#modal-content > div div:last-child {
+#modal-container #modal-body #modal-content > div div:last-child {
   margin-bottom: 0;
 }
-#modal-content > div div label {
+#modal-container #modal-body #modal-content > div div label {
   margin-left: 10px;
 }
-#modal-content > div div input[type=color] {
+#modal-container #modal-body #modal-content > div div input[type=color] {
   border: none;
   width: 30px;
   height: 30px;
@@ -171,10 +161,10 @@
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
-#modal-content > div div input[type=color]:hover {
+#modal-container #modal-body #modal-content > div div input[type=color]:hover {
   background-color: #f0f0f0;
 }
-#modal-content > div div input[type=checkbox] {
+#modal-container #modal-body #modal-content > div div input[type=checkbox] {
   margin: 5px;
   width: 20px;
   height: 20px;
@@ -183,16 +173,8 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-#modal-content > div div input[type=checkbox]:hover {
+#modal-container #modal-body #modal-content > div div input[type=checkbox]:hover {
   background-color: #e6e6e6;
-}
-
-h1 {
-  font-family: "Reggae", sans-serif;
-  color: #000;
-  white-space: nowrap;
-  overflow: hidden;
-  font-size: min(9vmin, 32px);
 }
 
 #info {
@@ -277,6 +259,23 @@ h1 {
   background-color: #bbb;
 }
 
+footer {
+  color: gray;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  font-family: "Reggae", sans-serif;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: min(9vmin, 32px);
+}
+
 #guide {
   font-size: larger;
   margin-top: 20px;
@@ -289,8 +288,4 @@ h1 {
 #attention #attention-list {
   list-style: "*";
   padding-left: 10px;
-}
-
-footer {
-  color: gray;
 }
