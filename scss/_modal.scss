@@ -101,3 +101,38 @@
     }
   }
 }
+
+// EX Masterのモーダル
+#exmaster-modal-container {
+  font-size: 0.9em;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+
+  #exmaster-modal-body {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 260px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+    input[type="checkbox"] {
+      margin-top: 15px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 5px 15px;
+      border: 0px;
+      background-color: #ddd;
+    }
+  }
+}
