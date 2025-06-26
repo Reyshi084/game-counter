@@ -1140,3 +1140,24 @@ const container = document.getElementById("modal-container");
 closeBtn.addEventListener("click", function () {
   container.classList.remove("active");
 });
+
+// EX Masterのモーダル
+
+function closeModal() {
+  const dontShow = document.getElementById("exmaster-modal-checkbox").checked;
+  if (dontShow) {
+    localStorage.setItem("exmaster-modal", "true");
+  }
+  document.getElementById("exmaster-modal-container").style.display = "none";
+}
+
+window.addEventListener("load", () => {
+  if (!localStorage.getItem("exmaster-modal")) {
+    document.getElementById("exmaster-modal-container").style.display = "flex";
+  }
+});
+
+const exmasterModalCloseBtn = document.getElementById(
+  "exmaster-modal-closebtn"
+);
+exmasterModalCloseBtn.addEventListener("click", closeModal);
